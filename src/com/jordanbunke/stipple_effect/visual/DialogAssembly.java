@@ -2020,7 +2020,7 @@ public class DialogAssembly {
         background.fillRectangle(t.splashBackground, 0, 0, w, h);
         mb.add(new SimpleMenuButton(new Coord2D(), new Bounds2D(w, h),
                 MenuElement.Anchor.LEFT_TOP, true,
-                () -> StippleEffect.get().clearDialog(), background, background));
+                DialogAssembly::setDialogToDemoLanding, background, background));
 
         // version
         final GameImage version = GraphicsUtils.uiText(t.splashText)
@@ -2057,6 +2057,19 @@ public class DialogAssembly {
                 MenuElement.Anchor.CENTRAL_BOTTOM, subtitle));
 
         setDialog(mb.build());
+    }
+
+    private static void setDialogToDemoLanding() {
+        final MenuBuilder mb = new MenuBuilder();
+
+        final String[] lines = ParserUtils.getBlurb(ResourceCodes.DEMO);
+
+        for (int y = 0; y < lines.length; y++)
+            mb.add(makeDialogLeftLabel(y, lines[y]));
+
+        setDialog(assembleDialog("Welcome!",
+                new MenuElementGrouping(mb.build().getMenuElements()),
+                () -> true, Constants.CLOSE_DIALOG_TEXT, () -> {}, true));
     }
 
     private static void setDialog(final Menu dialog) {
@@ -3158,8 +3171,6 @@ public class DialogAssembly {
                         ResourceCodes.SETTINGS,
                         ResourceCodes.NEW_PROJECT,
                         ResourceCodes.OPEN_FILE,
-                        ResourceCodes.SAVE,
-                        ResourceCodes.SAVE_AS,
                         ResourceCodes.RESIZE,
                         ResourceCodes.PAD,
                         ResourceCodes.STITCH_SPLIT_FRAMES,
@@ -3173,7 +3184,7 @@ public class DialogAssembly {
                 },
                 new String[] {
                         "Info", "Open panel manager", "Program Settings",
-                        "New Project", "Import", "Save", "Save As...",
+                        "New Project", "Import",
                         "Resize", "Pad", "Stitch or split frames", "Preview",
                         "Automation script",
                         "Undo", "Granular Undo", "Granular Redo", "Redo",
