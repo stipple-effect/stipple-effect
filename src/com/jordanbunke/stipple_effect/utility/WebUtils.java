@@ -6,7 +6,7 @@ import java.net.URI;
 public class WebUtils {
     private static final String
             ITCH_LINK = "https://flinkerflitzer.itch.io/stipple-effect",
-            SPONSOR_LINK = "https://github.com/sponsors/jbunke",
+            SOURCE_LINK = "https://github.com/jbunke/stipple-effect",
             DOCS_LINK = "https://github.com/jbunke/se-docs",
             API_LINK = "https://github.com/jbunke/se-api",
             BUG_LINK = "https://github.com/jbunke/stipple-effect/issues/new/choose",
@@ -20,8 +20,8 @@ public class WebUtils {
         visitSite(ITCH_LINK);
     }
 
-    public static void sponsorPage() {
-        visitSite(SPONSOR_LINK);
+    public static void sourceRepo() {
+        visitSite(SOURCE_LINK);
     }
 
     public static void documentation() {

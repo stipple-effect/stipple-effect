@@ -2062,10 +2062,27 @@ public class DialogAssembly {
     private static void setDialogToDemoLanding() {
         final MenuBuilder mb = new MenuBuilder();
 
+        mb.add(makeDialogLeftLabel(0,
+                "This demo is a limited version of " +
+                        StippleEffect.PROGRAM_NAME + " " +
+                        StippleEffect.getVersion() + "."));
+
         final String[] lines = ParserUtils.getBlurb(ResourceCodes.DEMO);
+        final int BLURB_Y_INDEX = 2;
 
         for (int y = 0; y < lines.length; y++)
-            mb.add(makeDialogLeftLabel(y, lines[y]));
+            mb.add(makeDialogLeftLabel(BLURB_Y_INDEX + y, lines[y]));
+
+        final TextLabel storePageLabel =
+                makeDialogLeftLabel(BLURB_Y_INDEX + lines.length + 1,
+                        "You can buy " + StippleEffect.PROGRAM_NAME +
+                                " to access all of the program's features:");
+        final StaticTextButton storePageButton =
+                GraphicsUtils.makeStandardTextButton("Go",
+                        contentPositionAfterLabel(storePageLabel),
+                        WebUtils::storePage);
+
+        mb.addAll(storePageLabel, storePageButton);
 
         setDialog(assembleDialog("Welcome!",
                 new MenuElementGrouping(mb.build().getMenuElements()),
@@ -3074,18 +3091,18 @@ public class DialogAssembly {
 
         final TextLabel storePageLabel = TextLabel.make(
                 contentStart.displace(indent, bottomY + TEXT_Y_OFFSET),
-                "Donate on the store page: "),
-                sponsorLabel = TextLabel.make(textBelowPos(storePageLabel),
-                "Sponsor me on GitHub: ");
+                "Buy the program to access all of its features and save your work:"),
+                sourceLabel = TextLabel.make(textBelowPos(storePageLabel),
+                "Check out the source code:");
         final StaticTextButton storePageButton =
                 GraphicsUtils.makeStandardTextButton("Go",
                         contentPositionAfterLabel(storePageLabel),
                         WebUtils::storePage),
-                sponsorButton = GraphicsUtils.makeStandardTextButton("Go",
-                        contentPositionAfterLabel(sponsorLabel),
-                        WebUtils::sponsorPage);
-        contentAssembler.addAll(Set.of(storePageLabel, sponsorLabel,
-                storePageButton, sponsorButton));
+                sourceButton = GraphicsUtils.makeStandardTextButton("Go",
+                        contentPositionAfterLabel(sourceLabel),
+                        WebUtils::sourceRepo);
+        contentAssembler.addAll(Set.of(storePageLabel, sourceLabel,
+                storePageButton, sourceButton));
 
         bottomY += DIALOG_CONTENT_INC_Y * 3;
 
@@ -3314,7 +3331,7 @@ public class DialogAssembly {
         mb.add(TextLabel.make(background.getRenderPosition().displace(
                         CONTENT_BUFFER_PX + BUTTON_BORDER_PX,
                         TEXT_Y_OFFSET + BUTTON_BORDER_PX),
-                StippleEffect.PROGRAM_NAME + " " + StippleEffect.getVersion() +
+                StippleEffect.PROGRAM_NAME + " [Demo] " + StippleEffect.getVersion() +
                         "  |  Help & Information"));
 
         // close button

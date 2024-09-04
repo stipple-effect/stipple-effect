@@ -77,6 +77,7 @@ public enum SEAction {
             KeyShortcut.single(ESCAPE)),
     CLEAR_DIALOG(ResourceCodes.NONE, fromSE(StippleEffect::clearDialog),
             KeyShortcut.single(ESCAPE)),
+    BUY(ResourceCodes.BUY, plain(WebUtils::storePage), null),
     DOCUMENTATION(ResourceCodes.DOCUMENTATION, plain(WebUtils::documentation), null),
     SCRIPTING_API(ResourceCodes.SCRIPTING_API, plain(WebUtils::scriptingAPI), null),
     REPORT_BUG(ResourceCodes.REPORT_BUG, plain(WebUtils::reportBug), null),
