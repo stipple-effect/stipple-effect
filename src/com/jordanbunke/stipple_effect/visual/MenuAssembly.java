@@ -64,11 +64,12 @@ public class MenuAssembly {
         final SEContext c = s.getContext();
 
         mb.add(new Navbar(
-                new NestedItem(StippleEffect.PROGRAM_NAME,
+                new NestedItem(StippleEffect.PROGRAM_NAME + " [Demo]",
                         SETTINGS.toItem(c),
                         INFO.toItem(c),
                         AUTOMATION_SCRIPT.toItem(c),
                         new NestedItem("Resources",
+                                BUY.toItem(c),
                                 DOCUMENTATION.toItem(c),
                                 SCRIPTING_API.toItem(c),
                                 REPORT_BUG.toItem(c),

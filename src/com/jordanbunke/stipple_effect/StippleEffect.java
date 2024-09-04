@@ -313,7 +313,7 @@ public class StippleEffect implements ProgramContext {
         final Bounds2D size = determineWindowSize();
         Layout.setSize(size.width(), size.height());
         final GameWindow window = new GameWindow(
-                PROGRAM_NAME + " " + getVersion(),
+                PROGRAM_NAME + " [Demo] " + getVersion(),
                 size.width(), size.height(),
                 GraphicsUtils.readIconAsset(ResourceCodes.PROGRAM),
                 true, false, !windowed);

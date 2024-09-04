@@ -1,5 +1,3 @@
-This demo is a limited version of Stipple Effect v1.1.0.
-
 You cannot...
 > save or export your work
 > copy any canvas contents to the clipboard to use in other software

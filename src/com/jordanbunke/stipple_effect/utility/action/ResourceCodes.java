@@ -133,6 +133,7 @@ public final class ResourceCodes {
             FULLSCREEN = NO_ICON_PREFIX + "fullscreen",
             WINDOWED = NO_ICON_PREFIX + "windowed",
             CEL_BUTTON = NO_ICON_PREFIX + "cel_button",
+            BUY = NO_ICON_PREFIX + "buy",
             REPORT_BUG = NO_ICON_PREFIX + "report_bug",
             VS_CODE_EXT = NO_ICON_PREFIX + "vs_code_ext",
             DOCUMENTATION = NO_ICON_PREFIX + "documentation",
