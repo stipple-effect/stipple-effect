@@ -371,7 +371,6 @@ public class SEContext {
         CROP_TO_SELECTION.doForMatchingKeyStroke(eventLogger, this);
 
         // other dialogs
-        SAVE_AS.doForMatchingKeyStroke(eventLogger, this);
         HISTORY.doForMatchingKeyStroke(eventLogger, this);
 
         // layer
@@ -429,7 +428,6 @@ public class SEContext {
         DOUBLE_OUTLINE.doForMatchingKeyStroke(eventLogger, this);
 
         // misc.
-        SAVE.doForMatchingKeyStroke(eventLogger, this);
         PREVIEW.doForMatchingKeyStroke(eventLogger, this);
         TOGGLE_PIXEL_GRID.doForMatchingKeyStroke(eventLogger, this);
         // call represents both canvas and selection possibilities; behaviour is identical

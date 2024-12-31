@@ -64,11 +64,12 @@ public class MenuAssembly {
         final SEContext c = s.getContext();
 
         mb.add(new Navbar(
-                new NestedItem(StippleEffect.PROGRAM_NAME,
+                new NestedItem(StippleEffect.PROGRAM_NAME + " [Demo]",
                         SETTINGS.toItem(c),
                         INFO.toItem(c),
                         AUTOMATION_SCRIPT.toItem(c),
                         new NestedItem("Resources",
+                                BUY.toItem(c),
                                 DOCUMENTATION.toItem(c),
                                 SCRIPTING_API.toItem(c),
                                 REPORT_BUG.toItem(c),
@@ -76,9 +77,7 @@ public class MenuAssembly {
                         EXIT_PROGRAM.toItem(c)),
                 new NestedItem("File",
                         NEW_PROJECT.toItem(c),
-                        OPEN_FILE.toItem(c),
-                        SAVE.toItem(c),
-                        SAVE_AS.toItem(c)),
+                        OPEN_FILE.toItem(c)),
                 new NestedItem("Edit",
                         new NestedItem("State control",
                                 UNDO.toItem(c),

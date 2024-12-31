@@ -25,8 +25,6 @@ public enum SEAction {
     DUMMY(ResourceCodes.NONE, c -> {}, null),
 
     // miscellaneous
-    SAVE(ResourceCodes.SAVE, c -> c.getSaveConfig().hasSaveAssociation(),
-            c -> c.getSaveConfig().save(c), new KeyShortcut(true, false, S)),
     OPEN_FILE(ResourceCodes.OPEN_FILE, fromSE(StippleEffect::openProject),
             new KeyShortcut(true, false, O)),
     PREVIEW(ResourceCodes.PREVIEW, null, Preview::set,
@@ -79,6 +77,7 @@ public enum SEAction {
             KeyShortcut.single(ESCAPE)),
     CLEAR_DIALOG(ResourceCodes.NONE, fromSE(StippleEffect::clearDialog),
             KeyShortcut.single(ESCAPE)),
+    BUY(ResourceCodes.BUY, plain(WebUtils::storePage), null),
     DOCUMENTATION(ResourceCodes.DOCUMENTATION, plain(WebUtils::documentation), null),
     SCRIPTING_API(ResourceCodes.SCRIPTING_API, plain(WebUtils::apiSpec), null),
     REPORT_BUG(ResourceCodes.REPORT_BUG, plain(WebUtils::reportBug), null),
@@ -107,8 +106,6 @@ public enum SEAction {
             new KeyShortcut(false, true, T)),
 
     // project dialogs
-    SAVE_AS(ResourceCodes.SAVE_AS, DialogAssembly::setDialogToSave,
-            new KeyShortcut(true, true, S)),
     HISTORY(ResourceCodes.HISTORY, DialogAssembly::setDialogToHistory,
             new KeyShortcut(false, true, Y)),
 
