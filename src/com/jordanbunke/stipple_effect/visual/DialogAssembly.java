@@ -2080,7 +2080,7 @@ public class DialogAssembly {
         final StaticTextButton storePageButton =
                 GraphicsUtils.makeStandardTextButton("Go",
                         contentPositionAfterLabel(storePageLabel),
-                        WebUtils::storePage);
+                        WebUtils::buyPage);
 
         mb.addAll(storePageLabel, storePageButton);
 
@@ -3097,7 +3097,7 @@ public class DialogAssembly {
         final StaticTextButton storePageButton =
                 GraphicsUtils.makeStandardTextButton("Go",
                         contentPositionAfterLabel(storePageLabel),
-                        WebUtils::storePage),
+                        WebUtils::buyPage),
                 sourceButton = GraphicsUtils.makeStandardTextButton("Go",
                         contentPositionAfterLabel(sourceLabel),
                         WebUtils::sourceRepo);

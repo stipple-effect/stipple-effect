@@ -5,7 +5,7 @@ import java.net.URI;
 
 public class WebUtils {
     private static final String
-            ITCH_LINK = "https://flinkerflitzer.itch.io/stipple-effect",
+            BUY_LINK = "https://jbunke.github.io/se/buy",
             SOURCE_LINK = "https://github.com/jbunke/stipple-effect",
             DOCS_LINK = "https://jbunke.github.io/se/docs",
             API_SPEC_LINK = "https://jbunke.github.io/se/api",
@@ -16,8 +16,8 @@ public class WebUtils {
         visitSite(BUG_LINK);
     }
 
-    public static void storePage() {
-        visitSite(ITCH_LINK);
+    public static void buyPage() {
+        visitSite(BUY_LINK);
     }
 
     public static void sourceRepo() {
