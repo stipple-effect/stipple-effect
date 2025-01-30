@@ -2020,7 +2020,7 @@ public class DialogAssembly {
         background.fillRectangle(t.splashBackground, 0, 0, w, h);
         mb.add(new SimpleMenuButton(new Coord2D(), new Bounds2D(w, h),
                 MenuElement.Anchor.LEFT_TOP, true,
-                () -> StippleEffect.get().clearDialog(), background, background));
+                DialogAssembly::setDialogToDemoLanding, background, background));
 
         // version
         final GameImage version = GraphicsUtils.uiText(t.splashText)
@@ -2057,6 +2057,36 @@ public class DialogAssembly {
                 MenuElement.Anchor.CENTRAL_BOTTOM, subtitle));
 
         setDialog(mb.build());
+    }
+
+    private static void setDialogToDemoLanding() {
+        final MenuBuilder mb = new MenuBuilder();
+
+        mb.add(makeDialogLeftLabel(0,
+                "This demo is a limited version of " +
+                        StippleEffect.PROGRAM_NAME + " " +
+                        StippleEffect.getVersion() + "."));
+
+        final String[] lines = ParserUtils.getBlurb(ResourceCodes.DEMO);
+        final int BLURB_Y_INDEX = 2;
+
+        for (int y = 0; y < lines.length; y++)
+            mb.add(makeDialogLeftLabel(BLURB_Y_INDEX + y, lines[y]));
+
+        final TextLabel storePageLabel =
+                makeDialogLeftLabel(BLURB_Y_INDEX + lines.length + 1,
+                        "You can buy " + StippleEffect.PROGRAM_NAME +
+                                " to access all of the program's features:");
+        final StaticTextButton storePageButton =
+                GraphicsUtils.makeStandardTextButton("Go",
+                        contentPositionAfterLabel(storePageLabel),
+                        WebUtils::buyPage);
+
+        mb.addAll(storePageLabel, storePageButton);
+
+        setDialog(assembleDialog("Welcome!",
+                new MenuElementGrouping(mb.build().getMenuElements()),
+                () -> true, Constants.CLOSE_DIALOG_TEXT, () -> {}, true));
     }
 
     private static void setDialog(final Menu dialog) {
@@ -3061,18 +3091,18 @@ public class DialogAssembly {
 
         final TextLabel storePageLabel = TextLabel.make(
                 contentStart.displace(indent, bottomY + TEXT_Y_OFFSET),
-                "Donate on the store page: "),
-                sponsorLabel = TextLabel.make(textBelowPos(storePageLabel),
-                "Sponsor me on GitHub: ");
+                "Buy the program to access all of its features and save your work:"),
+                sourceLabel = TextLabel.make(textBelowPos(storePageLabel),
+                "Check out the source code:");
         final StaticTextButton storePageButton =
                 GraphicsUtils.makeStandardTextButton("Go",
                         contentPositionAfterLabel(storePageLabel),
-                        WebUtils::storePage),
-                sponsorButton = GraphicsUtils.makeStandardTextButton("Go",
-                        contentPositionAfterLabel(sponsorLabel),
-                        WebUtils::sponsorPage);
-        contentAssembler.addAll(Set.of(storePageLabel, sponsorLabel,
-                storePageButton, sponsorButton));
+                        WebUtils::buyPage),
+                sourceButton = GraphicsUtils.makeStandardTextButton("Go",
+                        contentPositionAfterLabel(sourceLabel),
+                        WebUtils::sourceRepo);
+        contentAssembler.addAll(Set.of(storePageLabel, sourceLabel,
+                storePageButton, sourceButton));
 
         bottomY += DIALOG_CONTENT_INC_Y * 3;
 
@@ -3158,8 +3188,6 @@ public class DialogAssembly {
                         ResourceCodes.SETTINGS,
                         ResourceCodes.NEW_PROJECT,
                         ResourceCodes.OPEN_FILE,
-                        ResourceCodes.SAVE,
-                        ResourceCodes.SAVE_AS,
                         ResourceCodes.RESIZE,
                         ResourceCodes.PAD,
                         ResourceCodes.STITCH_SPLIT_FRAMES,
@@ -3173,7 +3201,7 @@ public class DialogAssembly {
                 },
                 new String[] {
                         "Info", "Open panel manager", "Program Settings",
-                        "New Project", "Import", "Save", "Save As...",
+                        "New Project", "Import",
                         "Resize", "Pad", "Stitch or split frames", "Preview",
                         "Automation script",
                         "Undo", "Granular Undo", "Granular Redo", "Redo",
@@ -3303,7 +3331,7 @@ public class DialogAssembly {
         mb.add(TextLabel.make(background.getRenderPosition().displace(
                         CONTENT_BUFFER_PX + BUTTON_BORDER_PX,
                         TEXT_Y_OFFSET + BUTTON_BORDER_PX),
-                StippleEffect.PROGRAM_NAME + " " + StippleEffect.getVersion() +
+                StippleEffect.PROGRAM_NAME + " [Demo] " + StippleEffect.getVersion() +
                         "  |  Help & Information"));
 
         // close button

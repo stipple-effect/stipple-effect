@@ -5,8 +5,8 @@ import java.net.URI;
 
 public class WebUtils {
     private static final String
-            ITCH_LINK = "https://flinkerflitzer.itch.io/stipple-effect",
-            SPONSOR_LINK = "https://github.com/sponsors/jbunke",
+            BUY_LINK = "https://stipple-effect.github.io/buy",
+            SOURCE_LINK = "https://github.com/jbunke/stipple-effect",
             DOCS_LINK = "https://stipple-effect.github.io/docs",
             API_SPEC_LINK = "https://stipple-effect.github.io/api",
             BUG_LINK = "https://github.com/stipple-effect/stipple-effect/issues/new/choose",
@@ -16,12 +16,12 @@ public class WebUtils {
         visitSite(BUG_LINK);
     }
 
-    public static void storePage() {
-        visitSite(ITCH_LINK);
+    public static void buyPage() {
+        visitSite(BUY_LINK);
     }
 
-    public static void sponsorPage() {
-        visitSite(SPONSOR_LINK);
+    public static void sourceRepo() {
+        visitSite(SOURCE_LINK);
     }
 
     public static void documentation() {

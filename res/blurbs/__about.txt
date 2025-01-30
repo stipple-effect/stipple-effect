@@ -12,9 +12,7 @@ Stipple Effect runs on the Java Virtual Machine (JVM) and is built on top of {De
 proprietary Java game library, which handles most of the rendering boilerplate, menu element logic,
 and other low-level systems and behaviours.
 
-If you get a lot of value out of the program, please consider supporting the developer's work in the
-following ways.
-
-Thank you!
-
 {Jordan Bunke, 2025}
+
+Thank you for downloading the demo! If you are enjoying the program, you may find the following links
+useful:
