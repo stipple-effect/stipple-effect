@@ -6,7 +6,7 @@ import java.net.URI;
 public class WebUtils {
     private static final String
             BUY_LINK = "https://stipple-effect.github.io/buy",
-            SOURCE_LINK = "https://github.com/jbunke/stipple-effect",
+            SOURCE_LINK = "https://github.com/stipple-effect/stipple-effect",
             DOCS_LINK = "https://stipple-effect.github.io/docs",
             API_SPEC_LINK = "https://stipple-effect.github.io/api",
             BUG_LINK = "https://github.com/stipple-effect/stipple-effect/issues/new/choose",
