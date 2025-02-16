@@ -69,7 +69,7 @@ public class LayerVisibilityButton extends SelectableMenuElement {
         final List<GameEvent> unprocessed = eventLogger.getUnprocessedEvents();
         for (GameEvent e : unprocessed) {
             if (e instanceof GameMouseEvent mouseEvent &&
-                    mouseEvent.matchesAction(GameMouseEvent.Action.CLICK)) {
+                    mouseEvent.matchesAction(GameMouseEvent.Action.DOWN)) {
                 mouseEvent.markAsProcessed();
 
                 if (eventLogger.isPressed(Key.SHIFT) && !eventLogger.isPressed(Key.CTRL))

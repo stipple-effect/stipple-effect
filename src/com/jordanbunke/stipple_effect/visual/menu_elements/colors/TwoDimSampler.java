@@ -77,7 +77,7 @@ public abstract class TwoDimSampler extends MenuElement {
         final Coord2D localMP = mp.displace(getRenderPosition().scale(-1));
 
         if (interacting) {
-            final java.util.List<GameEvent> unprocessed = eventLogger.getUnprocessedEvents();
+            final List<GameEvent> unprocessed = eventLogger.getUnprocessedEvents();
             for (GameEvent e : unprocessed) {
                 if (e instanceof GameMouseEvent me &&
                         me.matchesAction(GameMouseEvent.Action.UP)) {
