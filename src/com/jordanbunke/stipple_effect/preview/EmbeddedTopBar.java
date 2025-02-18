@@ -50,6 +50,8 @@ public final class EmbeddedTopBar extends MenuElement {
 
     @Override
     public void process(final InputEventLogger eventLogger) {
+        close.process(eventLogger);
+
         final Coord2D mousePos = eventLogger.getAdjustedMousePosition();
         final boolean inBounds = mouseIsWithinBounds(mousePos);
 
@@ -88,8 +90,6 @@ public final class EmbeddedTopBar extends MenuElement {
         }
 
         highlighted = !moving && inBounds;
-
-        close.process(eventLogger);
     }
 
     @Override
