@@ -160,10 +160,14 @@ public final class CelButton extends MenuElement {
         return validFrame && validLayer;
     }
 
+    private boolean inRenderArea() {
+        return layers.renderingChild(layerButton) &&
+                frames.renderingChild(frameButton);
+    }
+
     @Override
     public void render(final GameImage canvas) {
-        if (layers.renderingChild(layerButton) &&
-                frames.renderingChild(frameButton))
+        if (inRenderArea())
             draw(selected ? selectedImg
                     : (highlighted ? highlightImg : base), canvas);
     }
@@ -175,6 +179,9 @@ public final class CelButton extends MenuElement {
 
     @Override
     public void process(final InputEventLogger eventLogger) {
+        if (!inRenderArea())
+            return;
+
         final boolean mouseInBounds = mouseIsWithinBounds(eventLogger.getAdjustedMousePosition());
 
         highlighted = mouseInBounds && Permissions.isCursorFree();
@@ -185,7 +192,7 @@ public final class CelButton extends MenuElement {
         final List<GameEvent> unprocessed = eventLogger.getUnprocessedEvents();
         for (GameEvent e : unprocessed) {
             if (e instanceof GameMouseEvent me &&
-                    me.matchesAction(GameMouseEvent.Action.CLICK)) {
+                    me.matchesAction(GameMouseEvent.Action.DOWN)) {
                 if (KeyShortcut.areModKeysPressed(false, true, eventLogger)) {
                     me.markAsProcessed();
 
