@@ -756,7 +756,8 @@ public class StippleEffect implements ProgramContext {
     public void openProject() {
         FileIO.setDialogToFilesOnly();
         final String[] acceptedFileTypes = Stream.concat(
-                Stream.of(SaveConfig.SaveType.NATIVE.getFileSuffix()),
+                Stream.of(SaveConfig.SaveType.NATIVE.getFileSuffix(),
+                        SaveConfig.SaveType.GIF.getFileSuffix()),
                 Arrays.stream(Constants.ACCEPTED_RASTER_IMAGE_SUFFIXES)
         ).toArray(String[]::new);
 
@@ -861,6 +862,9 @@ public class StippleEffect implements ProgramContext {
             openNativeProject(contents, filepath);
 
             processNextImport();
+        } else if (fileName.endsWith(SaveConfig.SaveType.GIF.getFileSuffix())) {
+            openGIF(filepath);
+            processNextImport();
         } else if (isAcceptedRasterFormat(fileName)) {
             final GameImage image = GameImageIO.readImage(filepath);
 
@@ -877,10 +881,30 @@ public class StippleEffect implements ProgramContext {
 
     public void openNativeProject(final String contents, final Path filepath) {
         if (contents != null) {
+            // TODO - replace with stip-parser
             final SEContext project = ParserSerializer.load(contents, filepath);
             addContext(project, true);
         } else
             StatusUpdates.openFailed(filepath);
+    }
+
+    public void openGIF(final Path filepath) {
+        final GameImage[] frames = GameImageIO.readGIFAsFrames(filepath);
+
+        if (frames == null || frames.length == 0 || frames[0] == null) {
+            StatusUpdates.openFailed(filepath);
+            return;
+        }
+
+        final int w = frames[0].getWidth(), h = frames[0].getHeight(),
+                fc = frames.length;
+        final SELayer layer = new SELayer(Arrays.stream(frames).toList(),
+                frames[0], Constants.OPAQUE, true, false, false,
+                OnionSkin.trivial(), Constants.BASE_LAYER_NAME);
+        final ProjectState initial = ProjectState
+                .makeFromRasterFile(w, h, layer, fc);
+        final SEContext project = new SEContext(filepath, initial, w, h);
+        addContext(project, true);
     }
 
     private static boolean isAcceptedRasterFormat(final String toCheck) {

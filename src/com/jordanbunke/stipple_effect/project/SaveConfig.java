@@ -98,9 +98,20 @@ public final class SaveConfig {
                     filename.lastIndexOf(".")) : filename;
         }
 
-        final SaveType saveType = filepath != null && filepath.getFileName()
-                .toString().endsWith(SaveType.NATIVE.getFileSuffix())
-                ? SaveType.NATIVE : SaveType.PNG_SHEET;
+        final SaveType saveType;
+
+        if (filepath == null)
+            saveType = SaveType.PNG_SHEET;
+        else {
+            final String fn = filepath.getFileName().toString();
+
+            if (fn.endsWith(SaveType.NATIVE.getFileSuffix()))
+                saveType = SaveType.NATIVE;
+            else if (fn.endsWith(SaveType.GIF.getFileSuffix()))
+                saveType = SaveType.GIF;
+            else
+                saveType = SaveType.PNG_SHEET;
+        }
 
         return new SaveConfig(folder, name, saveType);
     }
