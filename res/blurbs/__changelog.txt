@@ -1,3 +1,14 @@
+{1.3.0} - Scheduled 2025-03-31
+
+TODO
+
+Added:
+> GIFs can now be imported as projects
+> Scripts now support relative filepaths beginning with {.} or {..}
+
+Changed:
+> Clicking is more responsive; most menu elements now listen for a mouse down instead of click event
+
 {1.2.3} - 2025-01-30
 
 Added:
