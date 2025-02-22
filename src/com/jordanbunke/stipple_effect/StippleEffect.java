@@ -30,6 +30,7 @@ import com.jordanbunke.stipple_effect.preview.Preview;
 import com.jordanbunke.stipple_effect.project.SEContext;
 import com.jordanbunke.stipple_effect.project.SaveConfig;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.state.ProjectState;
 import com.jordanbunke.stipple_effect.stip.ParserSerializer;
 import com.jordanbunke.stipple_effect.tools.*;
@@ -831,9 +832,9 @@ public class StippleEffect implements ProgramContext {
         if (filepath == null)
             return;
 
-        final HeadFuncNode script =
+        final HeadFuncNode head =
                 SEInterpreter.get().build(FileIO.readFile(filepath));
-        DialogVals.setColorScript(script);
+        DialogVals.setColorScript(new SEScript(head, filepath));
     }
 
     public Path openScript() {

@@ -2,11 +2,11 @@ package com.jordanbunke.stipple_effect.tools;
 
 import com.jordanbunke.delta_time.events.GameMouseEvent;
 import com.jordanbunke.delta_time.menu.menu_elements.container.MenuElementGrouping;
-import com.jordanbunke.delta_time.scripting.ast.nodes.function.HeadFuncNode;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.project.SEContext;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.utility.DialogVals;
 import com.jordanbunke.stipple_effect.utility.Layout;
 import com.jordanbunke.stipple_effect.visual.GraphicsUtils;
@@ -57,8 +57,9 @@ public final class ScriptBrush extends AbstractBrush
             super.onMouseDown(context, me);
     }
 
-    public void updateScript(final boolean valid, final HeadFuncNode script) {
-        c = valid ? c -> (Color) SEInterpreter.get().run(script, c) : null;
+    public void updateScript(final boolean valid, final SEScript script) {
+        c = valid ? c -> (Color) SEInterpreter.get()
+                .run(script.head(), script.path(), c) : null;
         this.valid = valid;
     }
 
@@ -84,12 +85,12 @@ public final class ScriptBrush extends AbstractBrush
     public MenuElementGrouping buildToolOptionsBar() {
         final MenuElementGrouping inherited = super.buildToolOptionsBar();
 
-        // script label
+        // head label
         final TextLabel scriptLabel = TextLabel.make(
                 new Coord2D(getAfterBreadthTextX(), Layout.optionsBarTextY()),
-                "Color script");
+                "Color head");
 
-        // upload script button
+        // upload head button
         final StaticTextButton scriptButton =
                 GraphicsUtils.makeStandardTextButton("Upload",
                         new Coord2D(Layout.optionsBarNextElementX(
@@ -99,7 +100,7 @@ public final class ScriptBrush extends AbstractBrush
                                                 Layout.STD_TEXT_BUTTON_H) / 2)),
                         StippleEffect.get()::openColorScript);
 
-        // script feedback label
+        // head feedback label
         final DynamicLabel scriptFeedback = DynamicLabel.make(new Coord2D(
                 Layout.optionsBarNextElementX(scriptButton, false),
                 Layout.optionsBarTextY()), DialogVals::colorScriptMessage,

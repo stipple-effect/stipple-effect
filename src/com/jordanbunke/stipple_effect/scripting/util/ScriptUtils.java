@@ -94,7 +94,7 @@ public class ScriptUtils {
             final GameImage[] input, final HeadFuncNode script
     ) {
         final boolean animScript = script.paramsMatch(
-                new TypeNode[] { TypeNode.arrayOf(TypeNode.getImage()) }),
+                TypeNode.arrayOf(TypeNode.getImage())),
                 imgReturn = script.getReturnType().equals(TypeNode.getImage());
 
         if (animScript) {

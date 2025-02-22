@@ -1,7 +1,6 @@
 package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.statement.project;
 
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.function.HeadFuncNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.FuncControlFlow;
@@ -9,6 +8,7 @@ import com.jordanbunke.delta_time.scripting.util.TextPosition;
 import com.jordanbunke.stipple_effect.project.SEContext;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
 import com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.type.ScriptTypeNode;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.state.Operation;
 import com.jordanbunke.stipple_effect.state.ProjectState;
 import com.jordanbunke.stipple_effect.utility.DialogVals;
@@ -33,7 +33,7 @@ public final class ColorScriptNode extends ProjectStatementNode {
         final int scopeIndex = (int) vs[0];
         final boolean includeDisabled = (boolean) vs[1],
                 ignoreSelection = (boolean) vs[2];
-        final HeadFuncNode colorScript = (HeadFuncNode) vs[3];
+        final SEScript colorScript = (SEScript) vs[3];
         final String attempt = "run the color script";
 
         if (scopeIndex < 0 || scopeIndex >= DialogVals.Scope.values().length)
@@ -41,7 +41,7 @@ public final class ColorScriptNode extends ProjectStatementNode {
                     "the scope (" + scopeIndex +
                             ") is not a valid index for this enumeration",
                     arguments.args()[0].getPosition());
-        else if (!SEInterpreter.validateColorScript(colorScript))
+        else if (!SEInterpreter.validateColorScript(colorScript.head()))
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the script is not a valid color script",
                     arguments.args()[3].getPosition());

@@ -1,10 +1,10 @@
 package com.jordanbunke.stipple_effect.utility;
 
 import com.jordanbunke.delta_time.image.GameImage;
-import com.jordanbunke.delta_time.scripting.ast.nodes.function.HeadFuncNode;
 import com.jordanbunke.delta_time.utility.math.MathPlus;
 import com.jordanbunke.stipple_effect.palette.PaletteSorter;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.selection.Outliner;
 import com.jordanbunke.stipple_effect.tools.ScriptBrush;
 import com.jordanbunke.stipple_effect.visual.SEFonts;
@@ -68,7 +68,7 @@ public class DialogVals {
             latinExImage = null,
             fontPreviewImage = GameImage.dummy();
 
-    private static HeadFuncNode colorScript = null;
+    private static SEScript colorScript = null;
 
     public enum ResizeBy {
         PIXELS, SCALE_FACTOR;
@@ -164,9 +164,9 @@ public class DialogVals {
         }
     }
 
-    public static void setColorScript(final HeadFuncNode colorScript) {
+    public static void setColorScript(final SEScript colorScript) {
         DialogVals.colorScript = colorScript;
-        colorScriptValid = SEInterpreter.validateColorScript(DialogVals.colorScript);
+        colorScriptValid = SEInterpreter.validateColorScript(colorScript.head());
 
         ScriptBrush.get().updateScript(colorScriptValid, colorScript);
     }
@@ -573,7 +573,7 @@ public class DialogVals {
         return colorScriptValid;
     }
 
-    public static HeadFuncNode getColorScript() {
+    public static SEScript getColorScript() {
         return colorScript;
     }
 

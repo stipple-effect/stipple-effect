@@ -3,7 +3,6 @@ package com.jordanbunke.stipple_effect.project;
 import com.jordanbunke.delta_time.events.*;
 import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.io.InputEventLogger;
-import com.jordanbunke.delta_time.scripting.ast.nodes.function.HeadFuncNode;
 import com.jordanbunke.delta_time.utility.DeltaTimeGlobal;
 import com.jordanbunke.delta_time.utility.math.Bounds2D;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
@@ -15,6 +14,7 @@ import com.jordanbunke.stipple_effect.layer.SELayer;
 import com.jordanbunke.stipple_effect.palette.Palette;
 import com.jordanbunke.stipple_effect.palette.PaletteLoader;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.selection.*;
 import com.jordanbunke.stipple_effect.state.Operation;
 import com.jordanbunke.stipple_effect.state.ProjectState;
@@ -941,7 +941,7 @@ public class SEContext {
         return runColorAlgorithm(ColorMath::shiftHSV);
     }
 
-    public ProjectState prepColorScript(final HeadFuncNode script) {
+    public ProjectState prepColorScript(final SEScript script) {
         final ProjectState state = getState();
 
         final boolean dropAndRaise = state.hasSelection() &&
@@ -950,8 +950,8 @@ public class SEContext {
         if (dropAndRaise)
             dropContentsToLayer(false, false);
 
-        return runColorAlgorithm(c ->
-                (Color) SEInterpreter.get().run(script, c));
+        return runColorAlgorithm(c -> (Color) SEInterpreter.get()
+                .run(script.head(), script.path(), c));
     }
 
     // color algorithm auxiliaries

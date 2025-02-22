@@ -29,7 +29,7 @@ public final class SEInterpreter extends Interpreter {
         final HeadFuncNode script = build(content);
 
         if (validateAutomationScript(script))
-            run(script);
+            run(script, filepath);
         else if (script != null)
             StatusUpdates.invalidAutomationScript(script.toString());
         else
@@ -41,8 +41,7 @@ public final class SEInterpreter extends Interpreter {
         if (script == null)
             return false;
 
-        return script.paramsMatch(new TypeNode[] {}) &&
-                script.getReturnType() == null;
+        return script.paramsMatch() && script.getReturnType() == null;
     }
 
     public static boolean validateColorScript(final HeadFuncNode script) {
@@ -51,7 +50,7 @@ public final class SEInterpreter extends Interpreter {
 
         final TypeNode COL_TYPE = TypeNode.getColor();
 
-        return script.paramsMatch(new TypeNode[] { COL_TYPE }) &&
+        return script.paramsMatch(COL_TYPE) &&
                 COL_TYPE.equals(script.getReturnType());
     }
 
@@ -67,8 +66,8 @@ public final class SEInterpreter extends Interpreter {
 
         final boolean imgReturn = IMG_TYPE.equals(returnType),
                 arrayReturn = IMG_ARRAY_TYPE.equals(returnType),
-                imgParam = script.paramsMatch(new TypeNode[] { IMG_TYPE }),
-                arrayParam = script.paramsMatch(new TypeNode[] { IMG_ARRAY_TYPE });
+                imgParam = script.paramsMatch(IMG_TYPE),
+                arrayParam = script.paramsMatch(IMG_ARRAY_TYPE);
 
         if (!(imgReturn || arrayReturn))
             return false;

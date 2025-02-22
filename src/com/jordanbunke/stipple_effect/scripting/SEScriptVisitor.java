@@ -12,6 +12,7 @@ import com.jordanbunke.stipple_effect.project.SaveConfig;
 import com.jordanbunke.stipple_effect.scripting.delegators.GraphicsNodeDelegator;
 import com.jordanbunke.stipple_effect.scripting.delegators.MathNodeDelegator;
 import com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.type.SEExtTypeNode;
+import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.scripting.util.LayerRep;
 import com.jordanbunke.stipple_effect.scripting.delegators.SENodeDelegator;
 import com.jordanbunke.stipple_effect.scripting.util.Light;
@@ -24,7 +25,7 @@ public final class SEScriptVisitor extends ScriptVisitor {
 
     static {
         final Set<Class<?>> extensionTypeObjects = Set.of(
-                SEContext.class, LayerRep.class,
+                SEContext.class, LayerRep.class, SEScript.class,
                 Palette.class, SaveConfig.class, Light.class);
 
         extensionTypeObjects.forEach(TypeCompatibility::addBaseType);
