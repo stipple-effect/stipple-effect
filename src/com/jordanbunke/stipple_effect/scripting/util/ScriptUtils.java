@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 
 public class ScriptUtils {
     public static SEContext transformProjectPerLayer(
-            final SEContext c, final HeadFuncNode script
+            final SEContext c, final HeadFuncNode script, final Path path
     ) {
         int w = 1, h = 1, fc = 1;
 
@@ -38,7 +38,7 @@ public class ScriptUtils {
                     .mapToObj(layer::getCel).toArray(GameImage[]::new);
 
             final GameImage[] output =
-                    ScriptUtils.runPreviewScript(layerContent, script);
+                    ScriptUtils.runPreviewScript(layerContent, script, path);
 
             if (output == null) {
                 ScriptErrorLog.fireError(
@@ -64,9 +64,9 @@ public class ScriptUtils {
     }
 
     public static SEContext transform(
-            final GameImage[] input, final HeadFuncNode script
+            final GameImage[] input, final HeadFuncNode script, final Path path
     ) {
-        return projectFromScriptOutput(runPreviewScript(input, script));
+        return projectFromScriptOutput(runPreviewScript(input, script, path));
     }
 
     public static SEContext projectFromScriptOutput(final GameImage[] output) {
@@ -91,7 +91,7 @@ public class ScriptUtils {
     }
 
     public static GameImage[] runPreviewScript(
-            final GameImage[] input, final HeadFuncNode script
+            final GameImage[] input, final HeadFuncNode script, final Path path
     ) {
         final boolean animScript = script.paramsMatch(
                 TypeNode.arrayOf(TypeNode.getImage())),
@@ -99,7 +99,7 @@ public class ScriptUtils {
 
         if (animScript) {
             // image[] -> image[] or image[] -> image
-            final Object result = SEInterpreter.get().run(script, (Object) input);
+            final Object result = SEInterpreter.get().run(script, path, (Object) input);
 
             if (result instanceof GameImage image)
                 return new GameImage[] { image };
@@ -112,7 +112,7 @@ public class ScriptUtils {
             final GameImage[] output = new GameImage[input.length];
 
             for (int i = 0; i < output.length; i++) {
-                final Object result = SEInterpreter.get().run(script, input[i]);
+                final Object result = SEInterpreter.get().run(script, path, input[i]);
 
                 if (result instanceof GameImage image)
                     output[i] = image;
@@ -123,7 +123,7 @@ public class ScriptUtils {
             return output;
         } else if (input.length == 1) {
             // image -> image[]
-            final Object result = SEInterpreter.get().run(script, input[0]);
+            final Object result = SEInterpreter.get().run(script, path, input[0]);
 
             return (result instanceof ScriptArray arr)
                     ? convertScriptImageArray(arr) : null;

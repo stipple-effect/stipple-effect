@@ -336,7 +336,7 @@ public abstract class Preview extends MenuElement implements PreviewPlayback {
     }
 
     private void runScript() {
-        content = ScriptUtils.runPreviewScript(content, script);
+        content = ScriptUtils.runPreviewScript(content, script, lastScriptPath);
 
         if (content == null)
             close();
@@ -392,7 +392,8 @@ public abstract class Preview extends MenuElement implements PreviewPlayback {
     }
 
     private void importPerLayer() {
-        final SEContext project = ScriptUtils.transformProjectPerLayer(c, script);
+        final SEContext project = ScriptUtils
+                .transformProjectPerLayer(c, script, lastScriptPath);
 
         StippleEffect.get().scheduleJob(() ->
                 StippleEffect.get().addContext(project, true));

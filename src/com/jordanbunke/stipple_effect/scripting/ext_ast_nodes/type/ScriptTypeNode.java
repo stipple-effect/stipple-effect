@@ -4,7 +4,7 @@ import com.jordanbunke.delta_time.scripting.util.TextPosition;
 import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 
 public final class ScriptTypeNode extends SEExtTypeNode {
-    public static final String NAME = "head";
+    public static final String NAME = "script";
     private static final ScriptTypeNode INSTANCE;
 
     public ScriptTypeNode(final TextPosition position) {

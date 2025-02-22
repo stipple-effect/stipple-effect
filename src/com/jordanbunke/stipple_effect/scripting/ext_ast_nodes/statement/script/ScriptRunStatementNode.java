@@ -32,7 +32,7 @@ public final class ScriptRunStatementNode extends ScopedStatementNode {
         final SEScript script = (SEScript) scope.evaluate(symbolTable);
         final Object[] args = arguments.getValues(symbolTable);
 
-        // execute before every internal head execution
+        // execute before every internal script execution
         final SymbolTable scriptTable =
                 SymbolTable.root(script.head(), script.path());
         script.head().semanticErrorCheck(scriptTable);

@@ -85,12 +85,12 @@ public final class ScriptBrush extends AbstractBrush
     public MenuElementGrouping buildToolOptionsBar() {
         final MenuElementGrouping inherited = super.buildToolOptionsBar();
 
-        // head label
+        // script label
         final TextLabel scriptLabel = TextLabel.make(
                 new Coord2D(getAfterBreadthTextX(), Layout.optionsBarTextY()),
-                "Color head");
+                "Color script");
 
-        // upload head button
+        // upload script button
         final StaticTextButton scriptButton =
                 GraphicsUtils.makeStandardTextButton("Upload",
                         new Coord2D(Layout.optionsBarNextElementX(
@@ -100,7 +100,7 @@ public final class ScriptBrush extends AbstractBrush
                                                 Layout.STD_TEXT_BUTTON_H) / 2)),
                         StippleEffect.get()::openColorScript);
 
-        // head feedback label
+        // script feedback label
         final DynamicLabel scriptFeedback = DynamicLabel.make(new Coord2D(
                 Layout.optionsBarNextElementX(scriptButton, false),
                 Layout.optionsBarTextY()), DialogVals::colorScriptMessage,
