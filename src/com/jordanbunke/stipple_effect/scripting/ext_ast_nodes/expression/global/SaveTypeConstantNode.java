@@ -11,7 +11,7 @@ public final class SaveTypeConstantNode extends ConstantNode {
     public SaveTypeConstantNode(
             final TextPosition position, final SaveConfig.SaveType saveType
     ) {
-        super(position);
+        super(position, TypeNode.getInt());
 
         this.saveType = saveType;
     }
@@ -22,12 +22,7 @@ public final class SaveTypeConstantNode extends ConstantNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getInt();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return saveType.name();
     }
 }

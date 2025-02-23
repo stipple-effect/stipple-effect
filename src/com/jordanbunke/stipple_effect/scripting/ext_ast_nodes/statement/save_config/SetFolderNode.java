@@ -26,13 +26,13 @@ public final class SetFolderNode extends SaveConfigStatementNode {
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SaveConfig sc = getSaveConfig(symbolTable);
         final ScriptArray folder =
-                (ScriptArray) arguments.getValues(symbolTable)[0];
+                (ScriptArray) arguments.evaluate(symbolTable)[0];
 
         if (folder.size() <= 0)
             StatusUpdates.scriptActionNotPermitted(
                     "set the folder of this save configuration",
                     "the path supplied is empty",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else {
             final Path fp = ScriptUtils.scriptFolderToPath(folder);
 
@@ -40,7 +40,7 @@ public final class SetFolderNode extends SaveConfigStatementNode {
                 StatusUpdates.scriptActionNotPermitted(
                         "set the folder of this save configuration",
                         "\"" + fp + "\" is not a directory",
-                        arguments.args()[0].getPosition());
+                        arguments.get(0).getPosition());
             else
                 sc.setFolder(fp);
         }
@@ -49,7 +49,7 @@ public final class SetFolderNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

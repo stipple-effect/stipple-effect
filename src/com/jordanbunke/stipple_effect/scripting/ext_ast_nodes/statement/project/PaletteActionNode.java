@@ -45,7 +45,7 @@ public final class PaletteActionNode extends ProjectStatementNode {
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
 
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final Palette palette = (Palette) vs[0];
         final int scopeIndex = (int) vs[1];
         final boolean includeDisabled = (boolean) vs[2],
@@ -57,7 +57,7 @@ public final class PaletteActionNode extends ProjectStatementNode {
                             palette.getName() + "\"",
                     "the scope (" + scopeIndex +
                             ") is not a valid index for this enumeration",
-                    arguments.args()[1].getPosition());
+                    arguments.get(1).getPosition());
         else {
             final DialogVals.Scope scope =
                     DialogVals.Scope.values()[scopeIndex];
@@ -85,7 +85,7 @@ public final class PaletteActionNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return palettize ? PALETTIZE : EXTRACT;
     }
 }

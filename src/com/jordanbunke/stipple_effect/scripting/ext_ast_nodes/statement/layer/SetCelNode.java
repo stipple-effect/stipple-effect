@@ -42,7 +42,7 @@ public final class SetCelNode extends LayerStatementNode {
     protected void operation(
             final LayerRep layer, final SymbolTable symbolTable
     ) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int frameIndex = (int) vs[0],
                 fc = layer.project().getState().getFrameCount();
         final GameImage content = (GameImage) vs[1];
@@ -56,18 +56,18 @@ public final class SetCelNode extends LayerStatementNode {
         if (frameIndex < 0)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (frameIndex >= fc)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is " +
                             (frameIndex == fc ? "greater than " : "equal to ") +
                             "the frame count (" + fc + ")",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (aw != ew || ah != eh)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the dimensions of the content (" + aw + "x" + ah +
                             ") do not match the project canvas bounds (" +
-                            ew + "x" + eh + ")", arguments.args()[1].getPosition());
+                            ew + "x" + eh + ")", arguments.get(1).getPosition());
         else {
             final int w = layer.project().getState().getImageWidth(),
                     h = layer.project().getState().getImageHeight();
@@ -83,7 +83,7 @@ public final class SetCelNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return set ? SET : EDIT;
     }
 }

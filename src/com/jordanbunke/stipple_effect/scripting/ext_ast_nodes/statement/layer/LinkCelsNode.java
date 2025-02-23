@@ -23,7 +23,7 @@ public final class LinkCelsNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

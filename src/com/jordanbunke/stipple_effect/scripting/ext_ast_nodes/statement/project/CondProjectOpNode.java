@@ -23,7 +23,7 @@ public abstract class CondProjectOpNode extends ProjectStatementNode {
             operation(project);
         else
             StatusUpdates.scriptActionNotPermitted(attempt(),
-                    failReason(project), scope.caller().getPosition());
+                    failReason(project), receiver.receiver().getPosition());
 
         return FuncControlFlow.cont();
     }

@@ -14,13 +14,13 @@ public final class LerpColorNode extends GraphicsExpressionNode {
     public LerpColorNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getColor(),
+        super(position, TypeNode.getColor(), args, TypeNode.getColor(),
                 TypeNode.getColor(), TypeNode.getFloat());
     }
 
     @Override
     public Color evaluate(final SymbolTable symbolTable) {
-        final Object[] args = arguments.getValues(symbolTable);
+        final Object[] args = arguments.evaluate(symbolTable);
 
         final Color a = (Color) args[0], b = (Color) args[1];
         final double t = (double) args[2];
@@ -29,12 +29,7 @@ public final class LerpColorNode extends GraphicsExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getColor();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

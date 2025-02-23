@@ -28,13 +28,13 @@ public final class SaveNode extends ProjectStatementNode {
         else
             StatusUpdates.scriptActionNotPermitted("save the project",
                     "the project does not have a valid save association",
-                    scope.caller().getPosition());
+                    receiver.receiver().getPosition());
 
         return FuncControlFlow.cont();
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -23,7 +23,7 @@ public final class SetSelectionNode extends ProjectStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int w = project.getState().getImageWidth(),
                 h = project.getState().getImageHeight();
@@ -37,7 +37,7 @@ public final class SetSelectionNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -38,7 +38,7 @@ public final class AssignColorNode extends GlobalStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final Color c = (Color) arguments.getValues(symbolTable)[0];
+        final Color c = (Color) arguments.evaluate(symbolTable)[0];
 
         StippleEffect.get().setColorIndexAndColor(primary
                 ? StippleEffect.PRIMARY : StippleEffect.SECONDARY, c);
@@ -47,7 +47,7 @@ public final class AssignColorNode extends GlobalStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return primary ? PRIM_NAME : SEC_NAME;
     }
 }

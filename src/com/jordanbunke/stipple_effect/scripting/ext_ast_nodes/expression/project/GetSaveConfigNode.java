@@ -13,7 +13,7 @@ public final class GetSaveConfigNode extends ProjectExpressionNode {
             final TextPosition position, final ExpressionNode scope,
             final ExpressionNode[] args
     ) {
-        super(position, scope, args);
+        super(position, scope, SaveConfigTypeNode.get(), args);
     }
 
     @Override
@@ -22,12 +22,7 @@ public final class GetSaveConfigNode extends ProjectExpressionNode {
     }
 
     @Override
-    public SaveConfigTypeNode getType(final SymbolTable symbolTable) {
-        return SaveConfigTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

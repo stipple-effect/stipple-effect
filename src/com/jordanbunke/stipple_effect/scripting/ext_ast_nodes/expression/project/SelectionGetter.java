@@ -20,7 +20,7 @@ public final class SelectionGetter extends ProjectExpressionNode {
             final TextPosition position, final ExpressionNode scope,
             final ExpressionNode[] args, final boolean get
     ) {
-        super(position, scope, args);
+        super(position, scope, getReturnType(get), args);
 
         this.get = get;
     }
@@ -51,14 +51,13 @@ public final class SelectionGetter extends ProjectExpressionNode {
                 : project.getState().hasSelection();
     }
 
-    @Override
-    public TypeNode getType(SymbolTable symbolTable) {
+    public static TypeNode getReturnType(final boolean get) {
         return get ? TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt()))
                 : TypeNode.getBool();
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return get ? GET : HAS;
     }
 }

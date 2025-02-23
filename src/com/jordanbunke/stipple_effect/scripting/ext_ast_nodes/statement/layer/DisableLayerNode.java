@@ -23,7 +23,7 @@ public final class DisableLayerNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

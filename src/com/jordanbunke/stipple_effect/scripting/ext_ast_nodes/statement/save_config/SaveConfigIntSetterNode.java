@@ -56,7 +56,7 @@ public final class SaveConfigIntSetterNode extends SaveConfigStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SaveConfig sc = getSaveConfig(symbolTable);
-        final int toSet = (int) arguments.getValues(symbolTable)[0];
+        final int toSet = (int) arguments.evaluate(symbolTable)[0];
 
         switch (property) {
             case COUNT_FROM -> sc.setCountFrom(toSet);
@@ -65,7 +65,7 @@ public final class SaveConfigIntSetterNode extends SaveConfigStatementNode {
                     StatusUpdates.scriptActionNotPermitted(
                             "set the frames per dimension of this save configuration",
                             "the value (" + toSet + ") is non-positive",
-                            arguments.args()[0].getPosition());
+                            arguments.get(0).getPosition());
                 else
                     sc.setFramesPerDim(toSet);
             }
@@ -77,7 +77,7 @@ public final class SaveConfigIntSetterNode extends SaveConfigStatementNode {
                             "the value (" + toSet + ") is out of bounds (" +
                                     Constants.MIN_SCALE_UP + "x - " +
                                     Constants.MAX_SCALE_UP + "x)",
-                            arguments.args()[0].getPosition());
+                            arguments.get(0).getPosition());
                 else
                     sc.setScaleUp(toSet);
             }
@@ -88,7 +88,7 @@ public final class SaveConfigIntSetterNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return property;
     }
 }

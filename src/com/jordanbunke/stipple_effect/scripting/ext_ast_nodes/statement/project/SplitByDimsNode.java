@@ -23,7 +23,7 @@ public final class SplitByDimsNode extends SplitNode {
 
     @Override
     public FuncControlFlow execute(SymbolTable symbolTable) {
-        final Object[] dims = arguments.getValues(symbolTable);
+        final Object[] dims = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int cols = (int) dims[0], rows = (int) dims[1];
         final boolean horizontal = (boolean) dims[2],
@@ -42,13 +42,13 @@ public final class SplitByDimsNode extends SplitNode {
                     "split the project into frames",
                     "the number of columns (" + cols + ") is invalid... " +
                             "should be 0 < c <= " + w,
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (rows <= 0 || rows > h)
             StatusUpdates.scriptActionNotPermitted(
                     "split the project into frames",
                     "the number of rows (" + rows + ") is invalid... " +
                             "should be 0 < r <= " + h,
-                    arguments.args()[1].getPosition());
+                    arguments.get(1).getPosition());
         else if (frames > Constants.MAX_NUM_FRAMES)
             StatusUpdates.scriptActionNotPermitted(
                     "split the project into frames",
@@ -69,7 +69,7 @@ public final class SplitByDimsNode extends SplitNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -1,7 +1,6 @@
 package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.global;
 
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.BaseTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -19,7 +18,7 @@ public final class GetColorNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean primary
     ) {
-        super(position, args);
+        super(position, TypeNode.getColor(), args);
 
         this.primary = primary;
     }
@@ -44,12 +43,7 @@ public final class GetColorNode extends GlobalExpressionNode {
     }
 
     @Override
-    public BaseTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getColor();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return primary ? PRIM_NAME : SEC_NAME;
     }
 }

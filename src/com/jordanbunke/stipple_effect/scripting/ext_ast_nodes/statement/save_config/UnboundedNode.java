@@ -23,7 +23,7 @@ public final class UnboundedNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

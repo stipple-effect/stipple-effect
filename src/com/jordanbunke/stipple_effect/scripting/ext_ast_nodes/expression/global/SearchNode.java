@@ -10,10 +10,10 @@ import com.jordanbunke.stipple_effect.tools.ToolThatSearches;
 
 public abstract class SearchNode extends GlobalExpressionNode {
     protected SearchNode(
-            final TextPosition position, final ExpressionNode[] args,
-            final TypeNode... expectedTypes
+            final TextPosition position, final TypeNode returnType,
+            final ExpressionNode[] args, final TypeNode... expectedTypes
     ) {
-        super(position, args, expectedTypes);
+        super(position, returnType, args, expectedTypes);
     }
 
     protected final Selection search(

@@ -29,7 +29,7 @@ public final class ColorScriptNode extends ProjectStatementNode {
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
 
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int scopeIndex = (int) vs[0];
         final boolean includeDisabled = (boolean) vs[1],
                 ignoreSelection = (boolean) vs[2];
@@ -40,11 +40,11 @@ public final class ColorScriptNode extends ProjectStatementNode {
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the scope (" + scopeIndex +
                             ") is not a valid index for this enumeration",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (!SEInterpreter.validateColorScript(colorScript.head()))
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the script is not a valid color script",
-                    arguments.args()[3].getPosition());
+                    arguments.get(3).getPosition());
         else {
             final DialogVals.Scope scope =
                     DialogVals.Scope.values()[scopeIndex];
@@ -70,7 +70,7 @@ public final class ColorScriptNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

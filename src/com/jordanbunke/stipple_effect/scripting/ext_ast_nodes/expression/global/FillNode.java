@@ -2,7 +2,6 @@ package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.global
 
 import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.BaseTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -16,14 +15,14 @@ public final class FillNode extends SearchNode {
     public FillNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getImage(), TypeNode.getColor(),
-                TypeNode.getInt(), TypeNode.getInt(), TypeNode.getFloat(),
-                TypeNode.getBool(), TypeNode.getBool());
+        super(position, TypeNode.getImage(), args, TypeNode.getImage(),
+                TypeNode.getColor(), TypeNode.getInt(), TypeNode.getInt(),
+                TypeNode.getFloat(), TypeNode.getBool(), TypeNode.getBool());
     }
 
     @Override
     public GameImage evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final GameImage img = (GameImage) vs[0];
         final Color color = (Color) vs[1];
         final int x = (int) vs[2], y = (int) vs[3];
@@ -41,12 +40,7 @@ public final class FillNode extends SearchNode {
     }
 
     @Override
-    public BaseTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getImage();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

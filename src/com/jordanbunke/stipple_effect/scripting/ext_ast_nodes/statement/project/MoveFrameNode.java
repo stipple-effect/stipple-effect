@@ -59,7 +59,7 @@ public final class MoveFrameNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return back ? BACK : FORWARD;
     }
 }

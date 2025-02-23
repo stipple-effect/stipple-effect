@@ -14,7 +14,7 @@ public final class GetProjectNoArgsNode extends GlobalExpressionNode {
             final TextPosition position,
             final ExpressionNode[] args
     ) {
-        super(position, args);
+        super(position, ProjectTypeNode.get(), args);
     }
 
     @Override
@@ -23,12 +23,7 @@ public final class GetProjectNoArgsNode extends GlobalExpressionNode {
     }
 
     @Override
-    public ProjectTypeNode getType(final SymbolTable symbolTable) {
-        return ProjectTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

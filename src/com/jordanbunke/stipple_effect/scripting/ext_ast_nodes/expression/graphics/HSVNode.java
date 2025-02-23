@@ -1,7 +1,6 @@
 package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.graphics;
 
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.BaseTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.ScriptErrorLog;
@@ -18,7 +17,7 @@ public final class HSVNode extends GraphicsExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final TypeNode... expectedTypes
     ) {
-        super(position, args, expectedTypes);
+        super(position, TypeNode.getColor(), args, expectedTypes);
     }
 
     public static HSVNode newHSV(
@@ -37,7 +36,7 @@ public final class HSVNode extends GraphicsExpressionNode {
 
     @Override
     public Color evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final double h = (double) vs[0],
                 s = (double) vs[1], v = (double) vs[2];
         final int a = vs.length == 4 ? (int) vs[3] : Constants.RGBA_SCALE;
@@ -61,18 +60,13 @@ public final class HSVNode extends GraphicsExpressionNode {
             final String component, final int argIndex, String value
     ) {
         ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                arguments.args()[argIndex].getPosition(),
+                arguments.get(argIndex).getPosition(),
                 "The value for the color's \"" + component +
                         "\" was out of bounds (" + value + ")");
     }
 
     @Override
-    public BaseTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getColor();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

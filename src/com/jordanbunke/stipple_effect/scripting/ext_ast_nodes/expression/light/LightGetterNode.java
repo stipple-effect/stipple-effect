@@ -2,18 +2,18 @@ package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.light;
 
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptArray;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
+import com.jordanbunke.delta_time.scripting.ast.nodes.expression.std_lib.MemberFuncCallNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.ScriptErrorLog;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
-import com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.ScopedExpressionNode;
 import com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.type.LightTypeNode;
 import com.jordanbunke.stipple_effect.scripting.util.Light;
 
 import java.util.Arrays;
 
-public final class LightGetterNode extends ScopedExpressionNode {
+public final class LightGetterNode extends MemberFuncCallNode {
     public static final String IS_POINT = "is_point",
             GET_LUMINOSITY = "get_luminosity", GET_COLOR = "get_color",
             GET_DIRECTION = "get_direction", GET_POSITION = "get_position",
@@ -25,7 +25,7 @@ public final class LightGetterNode extends ScopedExpressionNode {
             final TextPosition position, final ExpressionNode scope,
             final ExpressionNode[] args, final String fName
     ) {
-        super(position, scope, LightTypeNode.get(), args);
+        super(position, scope, LightTypeNode.get(), getReturnType(fName), args);
 
         this.fName = fName;
     }
@@ -81,7 +81,7 @@ public final class LightGetterNode extends ScopedExpressionNode {
 
     @Override
     public Object evaluate(final SymbolTable symbolTable) {
-        final Light light = (Light) scope.evaluate(symbolTable);
+        final Light light = (Light) receiver.evaluate(symbolTable);
         final boolean point = light.point;
 
         return switch (fName) {
@@ -133,8 +133,7 @@ public final class LightGetterNode extends ScopedExpressionNode {
                         "\" is only a property of " + slt + " lights");
     }
 
-    @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
+    public static TypeNode getReturnType(final String fName) {
         return switch (fName) {
             case IS_POINT -> TypeNode.getBool();
             case GET_LUMINOSITY, GET_RADIUS, GET_Z -> TypeNode.getFloat();
@@ -146,7 +145,7 @@ public final class LightGetterNode extends ScopedExpressionNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return fName;
     }
 }

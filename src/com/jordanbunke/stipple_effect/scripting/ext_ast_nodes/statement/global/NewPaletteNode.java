@@ -23,7 +23,7 @@ public final class NewPaletteNode extends GlobalStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final Color[] colors = convert((ScriptSet) vs[0]);
         final String name = (String) vs[1];
 
@@ -37,7 +37,7 @@ public final class NewPaletteNode extends GlobalStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

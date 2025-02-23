@@ -22,7 +22,7 @@ public final class ResizeNode extends ProjectStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final Object[] dims = arguments.getValues(symbolTable);
+        final Object[] dims = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int w = (int) dims[0], h = (int) dims[1];
 
@@ -38,7 +38,7 @@ public final class ResizeNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

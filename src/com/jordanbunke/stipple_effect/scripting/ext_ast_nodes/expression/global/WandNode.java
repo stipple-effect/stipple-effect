@@ -4,7 +4,6 @@ import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptArray;
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptSet;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.CollectionTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -19,14 +18,15 @@ public final class WandNode extends SearchNode {
     public WandNode(
             final TextPosition position, ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getImage(), TypeNode.getInt(),
+        super(position, TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
+                args, TypeNode.getImage(), TypeNode.getInt(),
                 TypeNode.getInt(), TypeNode.getFloat(),
                 TypeNode.getBool(), TypeNode.getBool());
     }
 
     @Override
     public ScriptSet evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final GameImage img = (GameImage) vs[0];
         final int x = (int) vs[1], y = (int) vs[2];
         final double tol = (double) vs[3];
@@ -42,12 +42,7 @@ public final class WandNode extends SearchNode {
     }
 
     @Override
-    public CollectionTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt()));
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

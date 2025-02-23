@@ -25,7 +25,7 @@ public final class TransformNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean shortened, final TypeNode... expectedTypes
     ) {
-        super(position, args, expectedTypes);
+        super(position, ProjectTypeNode.get(), args, expectedTypes);
 
         this.shortened = shortened;
     }
@@ -47,7 +47,7 @@ public final class TransformNode extends GlobalExpressionNode {
 
     @Override
     public SEContext evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
 
         final SEContext c = (SEContext) vs[0];
         final SEScript script = (SEScript) vs[1];
@@ -57,7 +57,7 @@ public final class TransformNode extends GlobalExpressionNode {
         if (script == null) {
             ScriptErrorLog.fireError(
                     ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[1].getPosition(),
+                    arguments.get(1).getPosition(),
                     "Could not compile the script to perform the transformation");
         } else if (SEInterpreter.validatePreviewScript(script.head(), c)) {
             final SEContext result = runPerLayer
@@ -71,7 +71,7 @@ public final class TransformNode extends GlobalExpressionNode {
         } else
             ScriptErrorLog.fireError(
                     ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[0].getPosition(),
+                    arguments.get(0).getPosition(),
                     "The script was not validated for this project");
 
         return null;
@@ -89,12 +89,7 @@ public final class TransformNode extends GlobalExpressionNode {
     }
 
     @Override
-    public ProjectTypeNode getType(final SymbolTable symbolTable) {
-        return ProjectTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

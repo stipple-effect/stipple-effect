@@ -23,7 +23,7 @@ public class SetFrameDurationNode extends ProjectStatementNode {
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
 
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int frameIndex = (int) vs[0],
                 fc = project.getState().getFrameCount();
         final double frameDuration = (double) vs[1];
@@ -34,20 +34,20 @@ public class SetFrameDurationNode extends ProjectStatementNode {
         if (frameIndex < 0)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (frameIndex >= fc)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is " +
                             (frameIndex == fc ? "greater than " : "equal to ") +
                             "the frame count (" + fc + ")",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (frameDuration < Constants.MIN_FRAME_DURATION ||
                 frameDuration > Constants.MAX_FRAME_DURATION)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame duration (" + frameDuration +
                             ") is out of bounds; " + Constants.MIN_FRAME_DURATION +
                             " <= frame_duration <= " + Constants.MAX_FRAME_DURATION,
-                    arguments.args()[1].getPosition());
+                    arguments.get(1).getPosition());
         else
             project.changeFrameDuration(frameDuration, frameIndex);
 
@@ -55,7 +55,7 @@ public class SetFrameDurationNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

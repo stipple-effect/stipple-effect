@@ -3,7 +3,6 @@ package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.global
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptArray;
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptSet;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.CollectionTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.ScriptErrorLog;
@@ -26,8 +25,8 @@ public final class PresetOutlineNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean single
     ) {
-        super(position, args,
-                TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
+        super(position, TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
+                args, TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
                 TypeNode.getInt());
 
         this.single = single;
@@ -47,7 +46,7 @@ public final class PresetOutlineNode extends GlobalExpressionNode {
 
     @Override
     public Object evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final Selection selection =
                 ScriptUtils.convertSelection((ScriptSet) vs[0]);
 
@@ -55,7 +54,7 @@ public final class PresetOutlineNode extends GlobalExpressionNode {
 
         if (side < -MAX || side > MAX) {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[1].getPosition(),
+                    arguments.get(1).getPosition(),
                     "Side mask value " + side + " is out of bounds (" +
                             (-MAX) + " <= px <= " + MAX + ")");
             return null;
@@ -75,12 +74,7 @@ public final class PresetOutlineNode extends GlobalExpressionNode {
     }
 
     @Override
-    public CollectionTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt()));
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return single ? SINGLE : DOUBLE;
     }
 }

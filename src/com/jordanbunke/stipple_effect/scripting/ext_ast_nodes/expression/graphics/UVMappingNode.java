@@ -15,13 +15,13 @@ public final class UVMappingNode extends GraphicsExpressionNode {
     public UVMappingNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getImage(),
+        super(position, TypeNode.getImage(), args, TypeNode.getImage(),
                 TypeNode.getImage(), TypeNode.getImage());
     }
 
     @Override
     public Object evaluate(final SymbolTable symbolTable) {
-        final GameImage[] args = Arrays.stream(arguments.getValues(symbolTable))
+        final GameImage[] args = Arrays.stream(arguments.evaluate(symbolTable))
                 .map(img -> (GameImage) img).toArray(GameImage[]::new);
         final GameImage texture = args[0], map = args[1], animation = args[2];
 
@@ -33,12 +33,7 @@ public final class UVMappingNode extends GraphicsExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getImage();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

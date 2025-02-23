@@ -20,12 +20,12 @@ public final class ReadScriptNode extends GlobalExpressionNode {
     public ReadScriptNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getString());
+        super(position, ScriptTypeNode.get(), args, TypeNode.getString());
     }
 
     @Override
     public SEScript evaluate(final SymbolTable symbolTable) {
-        final ExpressionNode arg = arguments.args()[0];
+        final ExpressionNode arg = arguments.get(0);
         final String scriptFP = (String) arg.evaluate(symbolTable);
         final Path scriptPath = PathHelper.process(
                 scriptFP, symbolTable, arg.getPosition());
@@ -47,12 +47,7 @@ public final class ReadScriptNode extends GlobalExpressionNode {
     }
 
     @Override
-    public ScriptTypeNode getType(final SymbolTable symbolTable) {
-        return ScriptTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

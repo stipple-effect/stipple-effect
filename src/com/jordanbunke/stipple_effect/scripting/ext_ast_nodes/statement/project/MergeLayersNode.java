@@ -35,7 +35,7 @@ public final class MergeLayersNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

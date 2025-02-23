@@ -16,7 +16,8 @@ public final class OpacityGetterNode extends LayerExpressionNode {
             final TextPosition position, final ExpressionNode scope,
             final ExpressionNode[] args, final boolean get
     ) {
-        super(position, scope, args);
+        super(position, scope, get
+                ? TypeNode.getFloat() : TypeNode.getBool(), args);
 
         this.get = get;
     }
@@ -43,12 +44,7 @@ public final class OpacityGetterNode extends LayerExpressionNode {
     }
 
     @Override
-    public TypeNode getType(SymbolTable symbolTable) {
-        return get ? TypeNode.getFloat() : TypeNode.getBool();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return get ? OPACITY : OPAQUE;
     }
 }

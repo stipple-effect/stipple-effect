@@ -20,7 +20,7 @@ public final class PaletteColorSetGetterNode extends PaletteExpressionNode {
             final TextPosition position, final ExpressionNode scope,
             final ExpressionNode[] args, final boolean included
     ) {
-        super(position, scope, args);
+        super(position, scope, TypeNode.setOf(TypeNode.getColor()), args);
 
         this.included = included;
     }
@@ -50,12 +50,7 @@ public final class PaletteColorSetGetterNode extends PaletteExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.setOf(TypeNode.getColor());
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return included ? INCLUDED : COLORS;
     }
 }

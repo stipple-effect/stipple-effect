@@ -12,7 +12,7 @@ public final class DimConstantNode extends ConstantNode {
     public DimConstantNode(
             final TextPosition position, final boolean horizontal
     ) {
-        super(position);
+        super(position, TypeNode.getBool());
 
         this.horizontal = horizontal;
     }
@@ -23,12 +23,7 @@ public final class DimConstantNode extends ConstantNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getBool();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return horizontal ? HORZ : VERT;
     }
 }

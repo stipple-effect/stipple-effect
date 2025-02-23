@@ -44,7 +44,7 @@ public final class LightFloatSetterNode extends LightStatementNode {
 
     @Override
     void operation(final Light light, final SymbolTable symbolTable) {
-        final double arg = (double) arguments.getValues(symbolTable)[0];
+        final double arg = (double) arguments.evaluate(symbolTable)[0];
 
         switch (fName) {
             case SET_LUMINOSITY -> light.setLuminosity(arg);
@@ -60,7 +60,7 @@ public final class LightFloatSetterNode extends LightStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return fName;
     }
 }

@@ -48,7 +48,7 @@ public final class SelectionOpNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return operation.name().toLowerCase();
     }
 }

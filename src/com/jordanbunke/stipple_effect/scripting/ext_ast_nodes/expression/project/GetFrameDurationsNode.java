@@ -13,7 +13,7 @@ public class GetFrameDurationsNode extends ProjectExpressionNode {
             final TextPosition position,
             final ExpressionNode scope, final ExpressionNode[] args
     ) {
-        super(position, scope, args);
+        super(position, scope, TypeNode.arrayOf(TypeNode.getFloat()), args);
     }
 
     @Override
@@ -23,12 +23,7 @@ public class GetFrameDurationsNode extends ProjectExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.arrayOf(TypeNode.getFloat());
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -15,19 +15,14 @@ public abstract class GetLayerNode extends ProjectExpressionNode {
             final ExpressionNode scope, final ExpressionNode[] args,
             final TypeNode... expectedTypes
     ) {
-        super(position, scope, args, expectedTypes);
+        super(position, scope, LayerTypeNode.get(), args, expectedTypes);
     }
 
     @Override
     public abstract LayerRep evaluate(SymbolTable symbolTable);
 
     @Override
-    public final LayerTypeNode getType(final SymbolTable symbolTable) {
-        return LayerTypeNode.get();
-    }
-
-    @Override
-    protected final String callName() {
+    protected final String funcName() {
         return NAME;
     }
 }

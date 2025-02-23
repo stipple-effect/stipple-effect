@@ -24,7 +24,7 @@ public final class WipeCelNode extends LayerStatementNode {
     protected void operation(
             final LayerRep layer, final SymbolTable symbolTable
     ) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int frameIndex = (int) vs[0],
                 fc = layer.project().getState().getFrameCount();
 
@@ -33,13 +33,13 @@ public final class WipeCelNode extends LayerStatementNode {
         if (frameIndex < 0)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (frameIndex >= fc)
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the frame index (" + frameIndex + ") is " +
                             (frameIndex == fc ? "greater than " : "equal to ") +
                             "the frame count (" + fc + ")",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else {
             final int w = layer.project().getState().getImageWidth(),
                     h = layer.project().getState().getImageHeight();
@@ -56,7 +56,7 @@ public final class WipeCelNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }
