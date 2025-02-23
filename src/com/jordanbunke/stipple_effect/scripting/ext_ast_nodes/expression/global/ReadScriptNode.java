@@ -37,8 +37,7 @@ public final class ReadScriptNode extends GlobalExpressionNode {
                     "Failed to read a script file at path \"" +
                             scriptFP + "\"");
 
-        final HeadFuncNode script =
-                SEInterpreter.get().build(FileIO.readFile(scriptPath));
+        final HeadFuncNode script = SEInterpreter.get().build(content);
         script.semanticErrorCheck(SymbolTable.root(script, scriptPath));
 
         if (ScriptErrorLog.hasNoErrors())
