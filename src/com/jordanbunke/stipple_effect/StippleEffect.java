@@ -22,6 +22,8 @@ import com.jordanbunke.delta_time.utility.math.Bounds2D;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
 import com.jordanbunke.delta_time.utility.math.MathPlus;
 import com.jordanbunke.delta_time.window.GameWindow;
+import com.jordanbunke.stip_parser.ParserSerializer;
+import com.jordanbunke.stip_parser.rep.IRState;
 import com.jordanbunke.stipple_effect.layer.OnionSkin;
 import com.jordanbunke.stipple_effect.layer.SELayer;
 import com.jordanbunke.stipple_effect.palette.Palette;
@@ -32,7 +34,6 @@ import com.jordanbunke.stipple_effect.project.SaveConfig;
 import com.jordanbunke.stipple_effect.scripting.SEInterpreter;
 import com.jordanbunke.stipple_effect.scripting.util.SEScript;
 import com.jordanbunke.stipple_effect.state.ProjectState;
-import com.jordanbunke.stipple_effect.stip.ParserSerializer;
 import com.jordanbunke.stipple_effect.tools.*;
 import com.jordanbunke.stipple_effect.utility.*;
 import com.jordanbunke.stipple_effect.utility.action.ResourceCodes;
@@ -874,7 +875,8 @@ public class StippleEffect implements ProgramContext {
             final String file = FileIO.readFile(filepath);
 
             if (file != null)
-                addPalette(ParserSerializer.loadPalette(file), true);
+                addPalette(Palette.realize(
+                        ParserSerializer.loadPalette(file)), true);
             else
                 StatusUpdates.openFailed(filepath);
         }
@@ -882,8 +884,10 @@ public class StippleEffect implements ProgramContext {
 
     public void openNativeProject(final String contents, final Path filepath) {
         if (contents != null) {
-            // TODO - replace with stip-parser
-            final SEContext project = ParserSerializer.load(contents, filepath);
+            final IRState rep = ParserSerializer.load(contents, filepath);
+            final int w = rep.width(), h = rep.height();
+            final SEContext project =
+                    new SEContext(filepath, ProjectState.realize(rep), w, h);
             addContext(project, true);
         } else
             StatusUpdates.openFailed(filepath);

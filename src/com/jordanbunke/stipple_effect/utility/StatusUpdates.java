@@ -2,10 +2,10 @@ package com.jordanbunke.stipple_effect.utility;
 
 import com.jordanbunke.delta_time.scripting.util.ScriptErrorLog;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
+import com.jordanbunke.stip_parser.ParserSerializer;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.palette.Palette;
 import com.jordanbunke.stipple_effect.selection.CelSelection;
-import com.jordanbunke.stipple_effect.stip.ParserSerializer;
 
 import java.awt.*;
 import java.nio.file.Path;

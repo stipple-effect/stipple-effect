@@ -2,6 +2,7 @@ package com.jordanbunke.stipple_effect.layer;
 
 import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.utility.math.MathPlus;
+import com.jordanbunke.stip_parser.rep.IROnionSkin;
 import com.jordanbunke.stipple_effect.utility.Constants;
 import com.jordanbunke.stipple_effect.visual.theme.SEColors;
 import com.jordanbunke.stipple_effect.visual.theme.logic.ThemeLogic;
@@ -59,6 +60,29 @@ public final class OnionSkin {
         underForward = dUnderForward;
     }
 
+    private OnionSkin(
+            final SkinType skinTypeBack, final SkinType skinTypeForward,
+            final double hueBack, final double hueForward,
+            final double fadeFactorBack, final double fadeFactorForward,
+            final int lookBack, final int lookForward,
+            final boolean underBack, final boolean underForward
+    ) {
+        this.skinTypeBack = skinTypeBack;
+        this.skinTypeForward = skinTypeForward;
+
+        this.hueBack = hueBack;
+        this.hueForward = hueForward;
+
+        this.fadeFactorBack = fadeFactorBack;
+        this.fadeFactorForward = fadeFactorForward;
+
+        this.lookBack = lookBack;
+        this.lookForward = lookForward;
+
+        this.underBack = underBack;
+        this.underForward = underForward;
+    }
+
     public static void reset() {
         dSkinTypeBack = SkinType.SIMPLE;
         dSkinTypeForward = SkinType.SIMPLE;
@@ -100,6 +124,22 @@ public final class OnionSkin {
 
         dUnderBack = underBack;
         dUnderForward = underForward;
+    }
+
+    static OnionSkin realize(final IROnionSkin rep) {
+        return new OnionSkin(SkinType.valueOf(rep.skinTypeBack().name()),
+                SkinType.valueOf(rep.skinTypeForward().name()),
+                rep.hueBack(), rep.hueForward(), rep.fadeFactorBack(),
+                rep.fadeFactorForward(), rep.lookBack(), rep.lookForward(),
+                rep.underBack(), rep.underForward());
+    }
+
+    IROnionSkin convert() {
+        return new IROnionSkin(
+                IROnionSkin.SkinType.valueOf(skinTypeBack.name()),
+                IROnionSkin.SkinType.valueOf(skinTypeForward.name()),
+                hueBack, hueForward, fadeFactorBack, fadeFactorForward,
+                lookBack, lookForward, underBack, underForward);
     }
 
     GameImage drawBase(final GameImage cel, final boolean back) {

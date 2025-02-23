@@ -1,6 +1,7 @@
 package com.jordanbunke.stipple_effect.palette;
 
 import com.jordanbunke.delta_time.utility.math.MathPlus;
+import com.jordanbunke.stip_parser.rep.IRPalette;
 import com.jordanbunke.stipple_effect.utility.Constants;
 import com.jordanbunke.stipple_effect.utility.DialogVals;
 import com.jordanbunke.stipple_effect.utility.math.ColorMath;
@@ -27,6 +28,14 @@ public class Palette {
                 colorSequence.add(c);
                 inclusionMap.put(c, true);
             }
+    }
+
+    public static Palette realize(final IRPalette rep) {
+        return new Palette(rep.name(), rep.colors());
+    }
+
+    public IRPalette convert() {
+        return new IRPalette(name, getColors());
     }
 
     public void addColor(final Color c) {

@@ -1,6 +1,8 @@
 package com.jordanbunke.stipple_effect.state;
 
 import com.jordanbunke.delta_time.image.GameImage;
+import com.jordanbunke.stip_parser.rep.IRLayer;
+import com.jordanbunke.stip_parser.rep.IRState;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.layer.OnionSkin;
 import com.jordanbunke.stipple_effect.layer.SELayer;
@@ -13,6 +15,7 @@ import com.jordanbunke.stipple_effect.utility.Constants;
 import com.jordanbunke.stipple_effect.visual.theme.SEColors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ProjectState {
@@ -125,6 +128,19 @@ public class ProjectState {
             frameDurations.add(Constants.DEFAULT_FRAME_DURATION);
 
         return frameDurations;
+    }
+
+    public static ProjectState realize(final IRState rep) {
+        return makeFromNativeFile(rep.width(), rep.height(),
+                Arrays.stream(rep.layers()).map(SELayer::realize).toList(),
+                rep.frameCount(),
+                Arrays.stream(rep.frameDurations()).boxed().toList());
+    }
+
+    public IRState convert() {
+        return new IRState(imageWidth, imageHeight, frameCount,
+                frameDurations.stream().mapToDouble(d -> d).toArray(),
+                layers.stream().map(SELayer::convert).toArray(IRLayer[]::new));
     }
 
     public ProjectState changeIsCheckpoint(
