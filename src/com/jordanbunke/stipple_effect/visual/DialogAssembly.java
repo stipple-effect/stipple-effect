@@ -20,6 +20,7 @@ import com.jordanbunke.delta_time.scripting.util.ScriptErrorLog;
 import com.jordanbunke.delta_time.utility.math.Bounds2D;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
 import com.jordanbunke.funke.core.ConcreteProperty;
+import com.jordanbunke.stip_parser.ParserSerializer;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.layer.OnionSkin;
 import com.jordanbunke.stipple_effect.layer.SELayer;
@@ -31,7 +32,6 @@ import com.jordanbunke.stipple_effect.project.SaveConfig;
 import com.jordanbunke.stipple_effect.selection.*;
 import com.jordanbunke.stipple_effect.state.Operation;
 import com.jordanbunke.stipple_effect.state.ProjectState;
-import com.jordanbunke.stipple_effect.stip.ParserSerializer;
 import com.jordanbunke.stipple_effect.tools.TextTool;
 import com.jordanbunke.stipple_effect.tools.Tool;
 import com.jordanbunke.stipple_effect.utility.*;
@@ -1627,7 +1627,8 @@ public class DialogAssembly {
                     final Path filepath = DialogVals.getPaletteFolder()
                             .resolve(DialogVals.getPaletteName() +
                                     "." + Constants.PALETTE_FILE_SUFFIX);
-                    ParserSerializer.savePalette(palette, filepath);
+                    ParserSerializer.savePalette(palette.convert(), filepath);
+                    StatusUpdates.savedPalette(filepath);
                 }, true));
     }
 

@@ -8,10 +8,10 @@ import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.image.ImageProcessing;
 import com.jordanbunke.delta_time.io.GameImageIO;
 import com.jordanbunke.delta_time.utility.math.MathPlus;
+import com.jordanbunke.stip_parser.ParserSerializer;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.selection.SelectionMode;
 import com.jordanbunke.stipple_effect.state.ProjectState;
-import com.jordanbunke.stipple_effect.stip.ParserSerializer;
 import com.jordanbunke.stipple_effect.utility.Constants;
 import com.jordanbunke.stipple_effect.utility.DialogVals;
 import com.jordanbunke.stipple_effect.utility.StatusUpdates;
@@ -140,7 +140,7 @@ public final class SaveConfig {
             final Thread stipSaverThread = new Thread(() -> {
                 final Path filepath = buildFilepath();
 
-                ParserSerializer.save(context, filepath);
+                ParserSerializer.save(context.getState().convert(), filepath);
                 StatusUpdates.saved(filepath);
             });
 

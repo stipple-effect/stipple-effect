@@ -2,6 +2,7 @@ package com.jordanbunke.stipple_effect.layer;
 
 import com.jordanbunke.delta_time.image.GameImage;
 import com.jordanbunke.delta_time.image.ImageProcessing;
+import com.jordanbunke.stip_parser.rep.IRLayer;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.selection.Selection;
 import com.jordanbunke.stipple_effect.utility.Constants;
@@ -86,6 +87,19 @@ public final class SELayer {
 
         generateRenders();
         generateOnionSkins();
+    }
+
+    public static SELayer realize(final IRLayer rep) {
+        return new SELayer(Arrays.stream(rep.cels()).toList(),
+                rep.linkedContent(), rep.opacity(), rep.enabled(),
+                rep.celsLinked(), rep.onionSkinOn(),
+                OnionSkin.realize(rep.onionSkin()), rep.name());
+    }
+
+    public IRLayer convert() {
+        return new IRLayer(name, cels.toArray(GameImage[]::new),
+                linkedContent, opacity, enabled, celsLinked,
+                onionSkinOn, onionSkin.convert());
     }
 
     private void generateRenders() {
