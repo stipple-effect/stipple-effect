@@ -30,7 +30,7 @@ public final class HSVShiftNode extends ProjectStatementNode {
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
 
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int scopeIndex = (int) vs[0], hShift = (int) vs[3];
         final boolean includeDisabled = (boolean) vs[1],
                 ignoreSelection = (boolean) vs[2];
@@ -43,7 +43,7 @@ public final class HSVShiftNode extends ProjectStatementNode {
             StatusUpdates.scriptActionNotPermitted(attempt,
                     "the scope (" + scopeIndex +
                             ") is not a valid index for this enumeration",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else {
             if (hShift < Constants.MIN_HUE_SHIFT ||
                     hShift > Constants.MAX_HUE_SHIFT)
@@ -52,13 +52,13 @@ public final class HSVShiftNode extends ProjectStatementNode {
                                 hShift + ") is out of bounds (" +
                                 Constants.MIN_HUE_SHIFT + "<= h_shift <= " +
                                 Constants.MAX_HUE_SHIFT + ")",
-                        arguments.args()[3].getPosition());
+                        arguments.get(3).getPosition());
             else if (sShift.outOfBounds())
                 sShift.oobNotification("saturation", attempt,
-                        arguments.args()[4].getPosition());
+                        arguments.get(4).getPosition());
             else if (vShift.outOfBounds())
                 vShift.oobNotification("value", attempt,
-                        arguments.args()[5].getPosition());
+                        arguments.get(5).getPosition());
             else {
                 final DialogVals.Scope scope =
                         DialogVals.Scope.values()[scopeIndex];
@@ -103,7 +103,7 @@ public final class HSVShiftNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

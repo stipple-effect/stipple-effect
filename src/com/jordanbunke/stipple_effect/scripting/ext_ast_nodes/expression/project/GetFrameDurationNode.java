@@ -14,22 +14,22 @@ public class GetFrameDurationNode extends ProjectExpressionNode {
             final TextPosition position,
             final ExpressionNode scope, final ExpressionNode[] args
     ) {
-        super(position, scope, args);
+        super(position, scope, TypeNode.getFloat(), args);
     }
 
     @Override
     public Double evaluate(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
-        final int frameIndex = (int) arguments.getValues(symbolTable)[0],
+        final int frameIndex = (int) arguments.evaluate(symbolTable)[0],
                 fc = project.getState().getFrameCount();
 
         if (frameIndex < 0)
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[0].getPosition(),
+                    arguments.get(0).getPosition(),
                     "The frame index (" + frameIndex + ") is negative");
         else if (frameIndex >= fc)
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[0].getPosition(),
+                    arguments.get(0).getPosition(),
                     "The frame index (" + frameIndex + ") is " +
                             (frameIndex == fc ? "greater than " : "equal to ") +
                             "the frame count (" + fc + ")");
@@ -40,12 +40,7 @@ public class GetFrameDurationNode extends ProjectExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getFloat();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

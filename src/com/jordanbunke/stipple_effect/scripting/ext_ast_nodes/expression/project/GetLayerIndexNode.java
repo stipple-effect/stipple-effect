@@ -1,7 +1,6 @@
 package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.project;
 
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.BaseTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -13,7 +12,7 @@ public final class GetLayerIndexNode extends ProjectExpressionNode {
             final TextPosition position,
             final ExpressionNode scope, final ExpressionNode[] args
     ) {
-        super(position, scope, args);
+        super(position, scope, TypeNode.getInt(), args);
     }
 
     @Override
@@ -22,12 +21,7 @@ public final class GetLayerIndexNode extends ProjectExpressionNode {
     }
 
     @Override
-    public BaseTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getInt();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

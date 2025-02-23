@@ -20,7 +20,7 @@ public final class SetLightDirectionNode extends LightStatementNode {
     @Override
     void operation(final Light light, final SymbolTable symbolTable) {
         final ScriptArray scriptDir =
-                (ScriptArray) arguments.getValues(symbolTable)[0];
+                (ScriptArray) arguments.evaluate(symbolTable)[0];
         final double[] direction = scriptDir.stream()
                 .mapToDouble(dim -> (double) dim).toArray();
 
@@ -29,7 +29,7 @@ public final class SetLightDirectionNode extends LightStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

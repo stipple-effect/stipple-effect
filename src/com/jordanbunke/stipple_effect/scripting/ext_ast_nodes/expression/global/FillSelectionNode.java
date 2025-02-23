@@ -21,7 +21,7 @@ public class FillSelectionNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean systemSelection, final TypeNode... expectedTypes
     ) {
-        super(position, args, expectedTypes);
+        super(position, TypeNode.getImage(), args, expectedTypes);
 
         this.systemSelection = systemSelection;
     }
@@ -43,7 +43,7 @@ public class FillSelectionNode extends GlobalExpressionNode {
 
     @Override
     public GameImage evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final GameImage img = (GameImage) vs[0],
                 res = new GameImage(img.getWidth(), img.getHeight());
         final Color c = (Color) vs[1];
@@ -59,12 +59,7 @@ public class FillSelectionNode extends GlobalExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getImage();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -22,7 +22,7 @@ public final class SetDimNode extends SaveConfigStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SaveConfig sc = getSaveConfig(symbolTable);
-        final boolean horizontal = (boolean) arguments.getValues(symbolTable)[0];
+        final boolean horizontal = (boolean) arguments.evaluate(symbolTable)[0];
 
         sc.setSequenceOrder(horizontal ? HORIZONTAL : VERTICAL);
 
@@ -30,7 +30,7 @@ public final class SetDimNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

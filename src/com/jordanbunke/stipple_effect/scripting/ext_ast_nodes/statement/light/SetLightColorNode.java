@@ -20,13 +20,13 @@ public final class SetLightColorNode extends LightStatementNode {
 
     @Override
     void operation(final Light light, final SymbolTable symbolTable) {
-        final Color color = (Color) arguments.getValues(symbolTable)[0];
+        final Color color = (Color) arguments.evaluate(symbolTable)[0];
 
         light.setColor(color);
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

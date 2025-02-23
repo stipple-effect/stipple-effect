@@ -2,7 +2,6 @@ package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.global
 
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptArray;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.CollectionTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -16,7 +15,7 @@ public final class GetSideMaskNode extends GlobalExpressionNode {
     public GetSideMaskNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args);
+        super(position, TypeNode.arrayOf(TypeNode.getInt()), args);
     }
 
     @Override
@@ -26,12 +25,7 @@ public final class GetSideMaskNode extends GlobalExpressionNode {
     }
 
     @Override
-    public CollectionTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.arrayOf(TypeNode.getInt());
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

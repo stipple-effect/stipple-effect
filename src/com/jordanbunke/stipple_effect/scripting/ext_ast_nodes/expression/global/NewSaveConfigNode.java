@@ -21,13 +21,14 @@ public final class NewSaveConfigNode extends GlobalExpressionNode {
     public NewSaveConfigNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.arrayOf(TypeNode.getString()),
+        super(position, SaveConfigTypeNode.get(), args,
+                TypeNode.arrayOf(TypeNode.getString()),
                 TypeNode.getString(), TypeNode.getInt());
     }
 
     @Override
     public SaveConfig evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
 
         final ScriptArray folder = (ScriptArray) vs[0];
         final String name = (String) vs[1];
@@ -36,19 +37,19 @@ public final class NewSaveConfigNode extends GlobalExpressionNode {
 
         if (folder.size() <= 0) {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[0].getPosition(),
+                    arguments.get(0).getPosition(),
                     "the folder path supplied is empty");
         } else if (!fp.toFile().isDirectory()) {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[0].getPosition(),
+                    arguments.get(0).getPosition(),
                     "\"" + fp + "\" is not a directory");
         } else if (!Textbox.validateAsFileName(name)) {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[1].getPosition(),
+                    arguments.get(1).getPosition(),
                     "\"" + name + "\" is not a valid filename");
         } else if (saveTypeIndex < 0 || saveTypeIndex >= SaveType.values().length) {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.CUSTOM_RT,
-                    arguments.args()[2].getPosition(),
+                    arguments.get(2).getPosition(),
                     saveTypeIndex + " is not a valid save type index (0 - " +
                             (SaveType.values().length - 1) + ")");
         } else
@@ -58,12 +59,7 @@ public final class NewSaveConfigNode extends GlobalExpressionNode {
     }
 
     @Override
-    public SaveConfigTypeNode getType(final SymbolTable symbolTable) {
-        return SaveConfigTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

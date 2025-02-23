@@ -3,7 +3,6 @@ package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression.global
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptArray;
 import com.jordanbunke.delta_time.scripting.ast.collection.ScriptSet;
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.CollectionTypeNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -20,20 +19,20 @@ public final class OutlineNode extends GlobalExpressionNode {
     public OutlineNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args,
-                TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
+        super(position, TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
+                args, TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt())),
                 TypeNode.arrayOf(TypeNode.getInt()));
     }
 
     @Override
     public ScriptSet evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final Selection selection =
                 ScriptUtils.convertSelection((ScriptSet) vs[0]);
         final int[] sideMask = ((ScriptArray) vs[1]).stream()
                 .mapToInt(s -> (int) s).toArray();
 
-        if (ScriptUtils.invalidSideMask(sideMask, arguments.args()[1]))
+        if (ScriptUtils.invalidSideMask(sideMask, arguments.get(1)))
             return null;
 
         final Selection outlined = Outliner.outline(selection, sideMask);
@@ -45,12 +44,7 @@ public final class OutlineNode extends GlobalExpressionNode {
     }
 
     @Override
-    public CollectionTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.setOf(TypeNode.arrayOf(TypeNode.getInt()));
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -16,13 +16,13 @@ public final class LightingNode extends GraphicsExpressionNode {
     public LightingNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getImage(), TypeNode.getImage(),
-                TypeNode.listOf(LightTypeNode.get()));
+        super(position, TypeNode.getImage(), args, TypeNode.getImage(),
+                TypeNode.getImage(), TypeNode.listOf(LightTypeNode.get()));
     }
 
     @Override
     public GameImage evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
 
         final GameImage texture = (GameImage) vs[0], normal = (GameImage) vs[1];
         final ScriptList scriptLights = (ScriptList) vs[2];
@@ -33,12 +33,7 @@ public final class LightingNode extends GraphicsExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getImage();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

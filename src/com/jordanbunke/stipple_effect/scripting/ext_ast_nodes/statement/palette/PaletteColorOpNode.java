@@ -119,13 +119,13 @@ public final class PaletteColorOpNode extends PaletteStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final Palette palette = getPalette(symbolTable);
-        final Color color = (Color) arguments.getValues(symbolTable)[0];
+        final Color color = (Color) arguments.evaluate(symbolTable)[0];
 
         if (!operation.condition(palette, color))
             StatusUpdates.scriptActionNotPermitted(
                     operation.attempt(palette, color),
                     operation.failReason(palette, color),
-                    scope.caller().getPosition());
+                    receiver.receiver().getPosition());
         else
             operation.apply(palette, color);
 
@@ -133,7 +133,7 @@ public final class PaletteColorOpNode extends PaletteStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return operation.toString();
     }
 }

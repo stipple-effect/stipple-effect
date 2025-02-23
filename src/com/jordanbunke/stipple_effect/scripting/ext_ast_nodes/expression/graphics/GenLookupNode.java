@@ -13,12 +13,13 @@ public final class GenLookupNode extends GraphicsExpressionNode {
     public GenLookupNode(
             final TextPosition position, final ExpressionNode[] args
     ) {
-        super(position, args, TypeNode.getImage(), TypeNode.getBool());
+        super(position, TypeNode.getImage(), args,
+                TypeNode.getImage(), TypeNode.getBool());
     }
 
     @Override
     public GameImage evaluate(final SymbolTable symbolTable) {
-        final Object[] args = arguments.getValues(symbolTable);
+        final Object[] args = arguments.evaluate(symbolTable);
 
         final GameImage source = (GameImage) args[0];
         final boolean horizontal = (boolean) args[1];
@@ -27,12 +28,7 @@ public final class GenLookupNode extends GraphicsExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getImage();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

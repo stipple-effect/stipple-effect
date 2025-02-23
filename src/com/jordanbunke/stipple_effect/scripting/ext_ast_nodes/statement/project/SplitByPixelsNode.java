@@ -23,7 +23,7 @@ public final class SplitByPixelsNode extends SplitNode {
 
     @Override
     public FuncControlFlow execute(SymbolTable symbolTable) {
-        final Object[] dims = arguments.getValues(symbolTable);
+        final Object[] dims = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int fw = (int) dims[0], fh = (int) dims[1];
         final boolean horizontal = (boolean) dims[2],
@@ -41,13 +41,13 @@ public final class SplitByPixelsNode extends SplitNode {
                     "split the project into frames",
                     "the single frame width (" + fw + " px) is invalid... " +
                             "should be 0 < fw <= " + w,
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (fh <= 0 || fh > h)
             StatusUpdates.scriptActionNotPermitted(
                     "split the project into frames",
                     "the single frame height (" + fh + " px) is invalid... " +
                             "should be 0 < fh <= " + h,
-                    arguments.args()[1].getPosition());
+                    arguments.get(1).getPosition());
         else if (frames > Constants.MAX_NUM_FRAMES)
             StatusUpdates.scriptActionNotPermitted(
                     "split the project into frames",
@@ -68,7 +68,7 @@ public final class SplitByPixelsNode extends SplitNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

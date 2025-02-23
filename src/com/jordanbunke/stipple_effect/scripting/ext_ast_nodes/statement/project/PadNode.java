@@ -23,7 +23,7 @@ public final class PadNode extends ProjectStatementNode {
 
     @Override
     public FuncControlFlow execute(SymbolTable symbolTable) {
-        final Object[] dims = arguments.getValues(symbolTable);
+        final Object[] dims = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int l = (int) dims[0], r = (int) dims[1],
                 t = (int) dims[2], b = (int) dims[3];
@@ -44,7 +44,7 @@ public final class PadNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -59,7 +59,7 @@ public final class MoveLayerNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return down ? DOWN : UP;
     }
 }

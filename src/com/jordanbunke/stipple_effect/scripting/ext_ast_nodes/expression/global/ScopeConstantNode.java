@@ -11,7 +11,7 @@ public final class ScopeConstantNode extends ConstantNode {
     public ScopeConstantNode(
             final TextPosition position, final DialogVals.Scope scope
     ) {
-        super(position);
+        super(position, TypeNode.getInt());
 
         this.scope = scope;
     }
@@ -22,12 +22,7 @@ public final class ScopeConstantNode extends ConstantNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getInt();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return scope.name();
     }
 }

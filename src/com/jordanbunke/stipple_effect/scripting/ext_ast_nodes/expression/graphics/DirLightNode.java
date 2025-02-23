@@ -21,7 +21,7 @@ public final class DirLightNode extends LightConstructorNode {
 
     @Override
     public Object evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
 
         final double luminosity = (double) vs[0];
         final Color color = (Color) vs[1];
@@ -33,7 +33,7 @@ public final class DirLightNode extends LightConstructorNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

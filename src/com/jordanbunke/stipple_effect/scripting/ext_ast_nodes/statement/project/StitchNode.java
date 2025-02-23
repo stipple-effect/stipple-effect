@@ -25,7 +25,7 @@ public final class StitchNode extends ProjectStatementNode {
 
     @Override
     public FuncControlFlow execute(SymbolTable symbolTable) {
-        final Object[] dims = arguments.getValues(symbolTable);
+        final Object[] dims = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int fpd = (int) dims[0];
         final boolean horizontal = (boolean) dims[1];
@@ -35,7 +35,7 @@ public final class StitchNode extends ProjectStatementNode {
                     "stitch the project's frames together",
                     "the number of frames per " +
                             (horizontal ? "row" : "column") + " was negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else {
             final int fc = project.getState().getFrameCount(),
                     w = project.getState().getImageWidth(),
@@ -61,7 +61,7 @@ public final class StitchNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

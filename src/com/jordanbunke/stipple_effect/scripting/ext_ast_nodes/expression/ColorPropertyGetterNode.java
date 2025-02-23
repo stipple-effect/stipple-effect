@@ -1,7 +1,7 @@
 package com.jordanbunke.stipple_effect.scripting.ext_ast_nodes.expression;
 
 import com.jordanbunke.delta_time.scripting.ast.nodes.expression.ExpressionNode;
-import com.jordanbunke.delta_time.scripting.ast.nodes.types.BaseTypeNode;
+import com.jordanbunke.delta_time.scripting.ast.nodes.expression.std_lib.PropertyNode;
 import com.jordanbunke.delta_time.scripting.ast.nodes.types.TypeNode;
 import com.jordanbunke.delta_time.scripting.ast.symbol_table.SymbolTable;
 import com.jordanbunke.delta_time.scripting.util.TextPosition;
@@ -18,7 +18,7 @@ public final class ColorPropertyGetterNode extends PropertyNode {
             final TextPosition position, final ExpressionNode scope,
             final String property
     ) {
-        super(position, scope, TypeNode.getColor());
+        super(position, scope, TypeNode.getColor(), TypeNode.getFloat());
 
         this.property = property;
     }
@@ -43,7 +43,7 @@ public final class ColorPropertyGetterNode extends PropertyNode {
 
     @Override
     public Double evaluate(final SymbolTable symbolTable) {
-        final Color c = (Color) scope.evaluate(symbolTable);
+        final Color c = (Color) receiver.evaluate(symbolTable);
 
         return switch (property) {
             case HUE -> ColorMath.rgbToHue(c);
@@ -53,12 +53,7 @@ public final class ColorPropertyGetterNode extends PropertyNode {
     }
 
     @Override
-    public BaseTypeNode getType(final SymbolTable symbolTable) {
-        return TypeNode.getFloat();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return property;
     }
 }

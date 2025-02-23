@@ -41,7 +41,7 @@ public final class NewProjectStatementNode extends GlobalStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

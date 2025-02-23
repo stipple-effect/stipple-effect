@@ -22,7 +22,7 @@ public class LayerSetNameNode extends LayerStatementNode {
     protected void operation(
             final LayerRep layer, final SymbolTable symbolTable
     ) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final String name = (String) vs[0];
 
         if (Textbox.validateAsFileName(name))
@@ -31,11 +31,11 @@ public class LayerSetNameNode extends LayerStatementNode {
             StatusUpdates.scriptActionNotPermitted(
                     "rename the layer \"" + layer.get().getName() + "\"",
                     "\"" + name + "\" is not a valid layer name",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

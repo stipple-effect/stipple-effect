@@ -35,7 +35,7 @@ public final class RemoveFrameNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

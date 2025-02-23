@@ -22,7 +22,7 @@ public final class SetLightPositionNode extends LightStatementNode {
     @Override
     void operation(final Light light, final SymbolTable symbolTable) {
         final ScriptArray scriptPos =
-                (ScriptArray) arguments.getValues(symbolTable)[0];
+                (ScriptArray) arguments.evaluate(symbolTable)[0];
 
         if (scriptPos.size() != 2) {
             StatusUpdates.scriptActionNotPermitted(
@@ -40,7 +40,7 @@ public final class SetLightPositionNode extends LightStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

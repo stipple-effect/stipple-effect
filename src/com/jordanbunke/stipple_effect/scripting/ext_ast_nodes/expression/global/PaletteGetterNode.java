@@ -17,7 +17,7 @@ public final class PaletteGetterNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean get
     ) {
-        super(position, args);
+        super(position, get ? PaletteTypeNode.get() : TypeNode.getBool(), args);
 
         this.get = get;
     }
@@ -52,12 +52,7 @@ public final class PaletteGetterNode extends GlobalExpressionNode {
     }
 
     @Override
-    public TypeNode getType(final SymbolTable symbolTable) {
-        return get ? PaletteTypeNode.get() : TypeNode.getBool();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return get ? GET : HAS;
     }
 }

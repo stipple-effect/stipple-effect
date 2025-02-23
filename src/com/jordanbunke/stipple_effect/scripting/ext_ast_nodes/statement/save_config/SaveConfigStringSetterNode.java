@@ -50,7 +50,7 @@ public final class SaveConfigStringSetterNode extends SaveConfigStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SaveConfig sc = getSaveConfig(symbolTable);
-        final String toSet = (String) arguments.getValues(symbolTable)[0];
+        final String toSet = (String) arguments.evaluate(symbolTable)[0];
 
         final boolean valid = property.equals(NAME)
                 ? validateName(toSet) : validateAffix(toSet);
@@ -69,7 +69,7 @@ public final class SaveConfigStringSetterNode extends SaveConfigStatementNode {
                             " of the save configuration",
                     "\"" + toSet + "\" is not a valid " +
                             property.replace("set_", ""),
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
 
         return FuncControlFlow.cont();
     }
@@ -84,7 +84,7 @@ public final class SaveConfigStringSetterNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return property;
     }
 }

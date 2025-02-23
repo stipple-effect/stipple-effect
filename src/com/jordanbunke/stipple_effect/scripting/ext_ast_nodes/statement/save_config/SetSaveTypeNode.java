@@ -20,7 +20,7 @@ public final class SetSaveTypeNode extends SaveConfigStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final int saveTypeIndex = (int) arguments.getValues(symbolTable)[0];
+        final int saveTypeIndex = (int) arguments.evaluate(symbolTable)[0];
         final SaveConfig sc = getSaveConfig(symbolTable);
 
         if (saveTypeIndex < 0 || saveTypeIndex >= SaveConfig.SaveType.values().length)
@@ -28,7 +28,7 @@ public final class SetSaveTypeNode extends SaveConfigStatementNode {
                     "set the save type of the save configuration",
                     "the value (" + saveTypeIndex +
                             ") is not a valid save type index",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else
             sc.setSaveType(SaveConfig.SaveType.values()[saveTypeIndex]);
 
@@ -36,7 +36,7 @@ public final class SetSaveTypeNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -61,7 +61,7 @@ public final class AddFrameNode extends CondProjectOpNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return duplicate ? DUPE_NAME : ADD_NAME;
     }
 }

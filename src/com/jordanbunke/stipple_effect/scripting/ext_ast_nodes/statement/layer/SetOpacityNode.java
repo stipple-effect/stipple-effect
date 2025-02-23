@@ -23,7 +23,7 @@ public final class SetOpacityNode extends LayerStatementNode {
             final LayerRep layer, final SymbolTable symbolTable
     ) {
         final double opacity =
-                (double) arguments.args()[0].evaluate(symbolTable);
+                (double) arguments.get(0).evaluate(symbolTable);
 
         layer.project().changeLayerOpacity(
                 MathPlus.bounded(0d, opacity, Constants.OPAQUE),
@@ -31,7 +31,7 @@ public final class SetOpacityNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

@@ -21,10 +21,10 @@ public final class SetSideMaskNode extends GlobalStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final int[] sideMask =
-                ((ScriptArray) arguments.getValues(symbolTable)[0])
+                ((ScriptArray) arguments.evaluate(symbolTable)[0])
                         .stream().mapToInt(s -> (int) s).toArray();
 
-        if (ScriptUtils.invalidSideMask(sideMask, arguments.args()[0]))
+        if (ScriptUtils.invalidSideMask(sideMask, arguments.get(0)))
             return FuncControlFlow.cont();
 
         DialogVals.setOutlineSideMask(sideMask);
@@ -33,7 +33,7 @@ public final class SetSideMaskNode extends GlobalStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

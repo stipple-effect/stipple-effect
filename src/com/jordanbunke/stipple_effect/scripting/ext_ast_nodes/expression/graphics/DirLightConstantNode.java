@@ -18,7 +18,8 @@ public final class DirLightConstantNode extends GraphicsExpressionNode {
     public DirLightConstantNode(
             final TextPosition position, final LightDirection direction
     ) {
-        super(position, new ExpressionNode[0]);
+        super(position, TypeNode.arrayOf(TypeNode.getFloat()),
+                new ExpressionNode[0]);
 
         this.direction = direction;
     }
@@ -36,11 +37,11 @@ public final class DirLightConstantNode extends GraphicsExpressionNode {
 
     @Override
     public String toString() {
-        return "$" + Constants.GRAPHICS_NAMESPACE + "." + callName();
+        return "$" + Constants.GRAPHICS_NAMESPACE + "." + funcName();
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return direction.name();
     }
 }

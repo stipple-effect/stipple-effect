@@ -39,7 +39,7 @@ public final class SetIndexNode extends ProjectStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final SEContext project = getProject(symbolTable);
         final int index = (int) vs[0], size = frame
                 ? project.getState().getFrameCount()
@@ -50,14 +50,14 @@ public final class SetIndexNode extends ProjectStatementNode {
             StatusUpdates.scriptActionNotPermitted(
                     "set this project's " + unit + "index",
                     "the supplied index is negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (index >= size)
             StatusUpdates.scriptActionNotPermitted(
                     "set this project's " + unit + "index",
                     "the supplied index (" + index +
                             ") is out of bounds for this project's " + size +
                             " " + unit + "s",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else if (frame)
             project.getState().setFrameIndex(index);
         else
@@ -67,7 +67,7 @@ public final class SetIndexNode extends ProjectStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return frame ? FRAME_NAME : LAYER_NAME;
     }
 }

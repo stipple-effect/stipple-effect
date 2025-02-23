@@ -22,7 +22,7 @@ public final class SaveAsNode extends ProjectStatementNode {
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
-        final SaveConfig sc = (SaveConfig) arguments.getValues(symbolTable)[0];
+        final SaveConfig sc = (SaveConfig) arguments.evaluate(symbolTable)[0];
 
         project.setSaveConfig(sc);
 
@@ -33,13 +33,13 @@ public final class SaveAsNode extends ProjectStatementNode {
             StatusUpdates.scriptActionNotPermitted(
                     "save the project with this save configuration",
                     "the folder and name configuration is invalid or incomplete",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
 
         return FuncControlFlow.cont();
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

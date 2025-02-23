@@ -22,7 +22,7 @@ public final class PointLightNode extends LightConstructorNode {
 
     @Override
     public Object evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
 
         final double luminosity = (double) vs[0],
                 radius = (double) vs[2], z = (double) vs[5];
@@ -33,7 +33,7 @@ public final class PointLightNode extends LightConstructorNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

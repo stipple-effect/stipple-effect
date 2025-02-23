@@ -23,7 +23,7 @@ public final class GetOneArgLayerNode extends GetLayerNode {
     public LayerRep evaluate(final SymbolTable symbolTable) {
         final SEContext project = getProject(symbolTable);
         final List<SELayer> layers = project.getState().getLayers();
-        final ExpressionNode arg = arguments.args()[0];
+        final ExpressionNode arg = arguments.get(0);
         final Object eval = arg.evaluate(symbolTable);
 
         if (eval instanceof Integer index) {
@@ -46,7 +46,7 @@ public final class GetOneArgLayerNode extends GetLayerNode {
                     "No layer matching the name \"" + name + "\" was found");
         } else {
             ScriptErrorLog.fireError(ScriptErrorLog.Message.ARG_NOT_TYPE,
-                    arg.getPosition(), callName(),
+                    arg.getPosition(), funcName(),
                     TypeNode.getString() + " or " + TypeNode.getInt(),
                     arg.getType(symbolTable).toString());
         }

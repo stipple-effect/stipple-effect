@@ -38,7 +38,7 @@ public final class SetBoundNode extends SaveConfigStatementNode {
 
     @Override
     public FuncControlFlow execute(final SymbolTable symbolTable) {
-        final int bound = (int) arguments.getValues(symbolTable)[0];
+        final int bound = (int) arguments.evaluate(symbolTable)[0];
         final SaveConfig sc = getSaveConfig(symbolTable);
 
         if (bound < 0)
@@ -46,7 +46,7 @@ public final class SetBoundNode extends SaveConfigStatementNode {
                     "set the " + (lower ? "lower" : "upper") +
                             " frame bound of the save configuration",
                     "the value supplied (" + bound + ") is negative",
-                    arguments.args()[0].getPosition());
+                    arguments.get(0).getPosition());
         else {
             if (lower)
                 sc.setLowerBound(bound);
@@ -60,7 +60,7 @@ public final class SetBoundNode extends SaveConfigStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return lower ? LOWER : UPPER;
     }
 }

@@ -19,7 +19,7 @@ public final class NewProjectNode extends GlobalExpressionNode {
             final TextPosition position, final ExpressionNode[] args,
             final boolean twoArg, final TypeNode... expectedTypes
     ) {
-        super(position, args, expectedTypes);
+        super(position, ProjectTypeNode.get(), args, expectedTypes);
 
         this.twoArg = twoArg;
     }
@@ -40,7 +40,7 @@ public final class NewProjectNode extends GlobalExpressionNode {
 
     @Override
     public SEContext evaluate(final SymbolTable symbolTable) {
-        final Object[] vs = arguments.getValues(symbolTable);
+        final Object[] vs = arguments.evaluate(symbolTable);
         final int w = (int) vs[0], h = (int) vs[1];
         final boolean openInSE = twoArg || (boolean) vs[2];
 
@@ -67,12 +67,7 @@ public final class NewProjectNode extends GlobalExpressionNode {
     }
 
     @Override
-    public ProjectTypeNode getType(final SymbolTable symbolTable) {
-        return ProjectTypeNode.get();
-    }
-
-    @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }

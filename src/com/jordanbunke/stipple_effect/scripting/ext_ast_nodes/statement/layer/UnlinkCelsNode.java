@@ -23,7 +23,7 @@ public final class UnlinkCelsNode extends LayerStatementNode {
     }
 
     @Override
-    protected String callName() {
+    protected String funcName() {
         return NAME;
     }
 }
