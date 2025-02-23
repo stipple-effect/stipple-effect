@@ -2,13 +2,15 @@ package com.jordanbunke.stipple_effect.utility.settings;
 
 import com.jordanbunke.delta_time.error.GameError;
 import com.jordanbunke.delta_time.io.FileIO;
+import com.jordanbunke.delta_time.utility.math.Pair;
+import com.jordanbunke.stip_parser.ParserSerializer;
+import com.jordanbunke.stip_parser.SerialBlock;
 import com.jordanbunke.stipple_effect.StippleEffect;
 import com.jordanbunke.stipple_effect.project.SEContext;
 import com.jordanbunke.stipple_effect.tools.ToolWithBreadth;
 import com.jordanbunke.stipple_effect.utility.Constants;
 import com.jordanbunke.stipple_effect.utility.Layout;
 import com.jordanbunke.stipple_effect.utility.OSUtils;
-import com.jordanbunke.stipple_effect.utility.ParserUtils;
 import com.jordanbunke.stipple_effect.utility.settings.types.BooleanSettingType;
 import com.jordanbunke.stipple_effect.utility.settings.types.EnumSettingType;
 import com.jordanbunke.stipple_effect.utility.settings.types.IntSettingType;
@@ -23,6 +25,7 @@ import com.jordanbunke.stipple_effect.visual.theme.Themes;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class Settings {
     private static final Path SETTINGS_FILE;
@@ -119,9 +122,7 @@ public class Settings {
         }
         @Override
         public String toString() {
-            final String name = name();
-
-            return name.toLowerCase();
+            return name().toLowerCase();
         }
 
         public static Code fromString(final String code) {
@@ -177,25 +178,18 @@ public class Settings {
         if (file == null)
             return;
 
-        final String[] settingsLines = FileIO.readFile(SETTINGS_FILE).split("\n");
+        final SerialBlock[] blocks = ParserSerializer
+                .deserializeBlocksAtDepthLevel(file);
 
-        for (String line : settingsLines) {
-            final String[] codeAndValue =
-                    ParserUtils.splitIntoCodeAndValue(line);
-
-            if (codeAndValue.length != ParserUtils.DESIRED)
-                continue;
-
-            final String code = codeAndValue[ParserUtils.CODE],
-                    value = codeAndValue[ParserUtils.VALUE];
-
-            final Code matched = Code.fromString(code);
+        for (SerialBlock block : blocks) {
+            final Code matched = Code.fromString(block.tag());
 
             if (matched != null)
-                matched.read(value);
+                matched.read(block.value());
         }
     }
 
+    @SuppressWarnings("all")
     public static void write() {
         final Path settingsFolder = SETTINGS_FILE.getParent();
 
@@ -216,11 +210,10 @@ public class Settings {
 
         final StringBuilder sb = new StringBuilder();
 
-        for (Code code : Code.values())
-            sb.append(code).append(Constants.SETTING_SEPARATOR)
-                    .append(Constants.OPEN_SETTING_VAL)
-                    .append(code.setting.get())
-                    .append(Constants.CLOSE_SETTING_VAL).append("\n");
+        ParserSerializer.serializeSimpleAttributes(sb, -1,
+                Arrays.stream(Code.values()).map(c ->
+                        new Pair<>(c.toString(), c.setting.get().toString()))
+                        .toArray(Pair[]::new));
 
         FileIO.writeFile(SETTINGS_FILE, sb.toString());
     }

@@ -21,8 +21,10 @@ import com.jordanbunke.delta_time.utility.Version;
 import com.jordanbunke.delta_time.utility.math.Bounds2D;
 import com.jordanbunke.delta_time.utility.math.Coord2D;
 import com.jordanbunke.delta_time.utility.math.MathPlus;
+import com.jordanbunke.delta_time.utility.math.Pair;
 import com.jordanbunke.delta_time.window.GameWindow;
 import com.jordanbunke.stip_parser.ParserSerializer;
+import com.jordanbunke.stip_parser.SerialBlock;
 import com.jordanbunke.stip_parser.rep.IRState;
 import com.jordanbunke.stipple_effect.layer.OnionSkin;
 import com.jordanbunke.stipple_effect.layer.SELayer;
@@ -61,8 +63,7 @@ import static com.jordanbunke.stipple_effect.utility.action.SEAction.*;
 
 public class StippleEffect implements ProgramContext {
     public static String
-            PROGRAM_NAME = "Stipple Effect",
-            NATIVE_STANDARD = "1.0", PALETTE_STANDARD = "1.0";
+            PROGRAM_NAME = "Stipple Effect";
     private static Version VERSION = new Version(1, 0, 0);
     private static boolean IS_DEVBUILD = false;
 
@@ -142,24 +143,19 @@ public class StippleEffect implements ProgramContext {
     }
 
     private static void readProgramFile() {
-        final String[] programFile = FileIO.readResource(ResourceLoader
-                .loadResource(Constants.PROGRAM_FILE), "prg").split("\n");
+        final String programFile = FileIO.readResource(ResourceLoader
+                .loadResource(Constants.PROGRAM_FILE), "");
 
-        for (String line : programFile) {
-            final String[] codeAndValue = ParserUtils.splitIntoCodeAndValue(line);
+        final SerialBlock[] blocks = ParserSerializer
+                .deserializeBlocksAtDepthLevel(programFile);
 
-            if (codeAndValue.length != ParserUtils.DESIRED)
-                continue;
-
-            final String code = codeAndValue[ParserUtils.CODE],
-                    value = codeAndValue[ParserUtils.VALUE];
-
-            switch (code) {
-                case Constants.NAME_CODE -> PROGRAM_NAME = value;
+        for (SerialBlock block : blocks) {
+            switch (block.tag()) {
+                case Constants.NAME_CODE -> PROGRAM_NAME = block.value();
                 case Constants.VERSION_CODE -> {
                     try {
                         final Integer[] components = Arrays
-                                .stream(value.split("\\."))
+                                .stream(block.value().split("\\."))
                                 .map(Integer::parseInt).toArray(Integer[]::new);
 
                         final int MAJOR = 0, MINOR = 1, PATCH = 2,
@@ -177,11 +173,7 @@ public class StippleEffect implements ProgramContext {
                     }
                 }
                 case Constants.IS_DEVBUILD_CODE ->
-                        IS_DEVBUILD = Boolean.parseBoolean(value);
-                case Constants.NATIVE_STANDARD_CODE ->
-                        NATIVE_STANDARD = value;
-                case Constants.PALETTE_STANDARD_CODE ->
-                        PALETTE_STANDARD = value;
+                        IS_DEVBUILD = Boolean.parseBoolean(block.value());
             }
         }
 
@@ -190,18 +182,15 @@ public class StippleEffect implements ProgramContext {
 
             final Path toSave = Path.of("res").resolve(Constants.PROGRAM_FILE);
 
-            final String write = ParserUtils.encloseSetting(
-                    Constants.NAME_CODE, PROGRAM_NAME) +
-                    ParserUtils.encloseSetting(Constants.VERSION_CODE,
-                            VERSION.toString()) +
-                    ParserUtils.encloseSetting(Constants.IS_DEVBUILD_CODE,
-                            String.valueOf(IS_DEVBUILD)) +
-                    ParserUtils.encloseSetting(
-                            Constants.NATIVE_STANDARD_CODE, NATIVE_STANDARD) +
-                    ParserUtils.encloseSetting(
-                            Constants.PALETTE_STANDARD_CODE, PALETTE_STANDARD);
+            final StringBuilder updated = new StringBuilder();
 
-            FileIO.writeFile(toSave, write);
+            ParserSerializer.serializeSimpleAttributes(updated, -1,
+                    new Pair<>(Constants.NAME_CODE, PROGRAM_NAME),
+                    new Pair<>(Constants.VERSION_CODE, VERSION.toString()),
+                    new Pair<>(Constants.IS_DEVBUILD_CODE,
+                            String.valueOf(IS_DEVBUILD)));
+
+            FileIO.writeFile(toSave, updated.toString());
         }
     }
 

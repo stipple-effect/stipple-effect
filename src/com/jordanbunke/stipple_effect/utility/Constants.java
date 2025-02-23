@@ -9,9 +9,7 @@ import java.nio.file.Path;
 public class Constants {
     public static final String
             NAME_CODE = "name", VERSION_CODE = "version",
-            IS_DEVBUILD_CODE = "devbuild",
-            NATIVE_STANDARD_CODE = "native_standard",
-            PALETTE_STANDARD_CODE = "palette_standard";
+            IS_DEVBUILD_CODE = "devbuild";
 
     public static final Path PROGRAM_FILE = Path.of("program"),
             ICON_FOLDER = Path.of("icons"),
@@ -46,7 +44,6 @@ public class Constants {
             COLOR_TOOL_TIP_PREFIX = "color:", SHORTCUT_PREFIX = "sc:",
             OPEN_HIGHLIGHT = "{", CLOSE_HIGHLIGHT = "}",
             OPEN_COLOR = "<#", CLOSE_COLOR = ">",
-            OPEN_SETTING_VAL = "{", CLOSE_SETTING_VAL = "}", SETTING_SEPARATOR = ":",
             TYPING_CODE = "typing", CEL_SELECTION = "cel_selection",
             GENERIC_APPROVAL_TEXT = "Confirm", CLOSE_DIALOG_TEXT = "Close";
 

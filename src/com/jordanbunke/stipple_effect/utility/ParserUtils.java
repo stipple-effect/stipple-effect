@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserUtils {
-    public static final int CODE = 0, VALUE = 1, DESIRED = 2;
-
     public static GameImage generateStatusEffectText(final String message) {
         final Theme t = Settings.getTheme();
         final Color main = ThemeLogic.intuitTextColor(t.panelBackground, true),
@@ -106,31 +104,5 @@ public class ParserUtils {
         }
 
         return code;
-    }
-
-    public static String[] splitIntoCodeAndValue(final String line) {
-        final String sep = Constants.SETTING_SEPARATOR,
-                o = Constants.OPEN_SETTING_VAL,
-                c = Constants.CLOSE_SETTING_VAL;
-        final int oi = line.indexOf(o), ol = o.length(),
-                ci = line.indexOf(c), si = line.indexOf(sep);
-
-        final boolean hasValue = oi > si && oi < ci, valid = si > 0 && hasValue;
-
-        if (!valid)
-            return new String[] {};
-
-        final String code = line.substring(0, si),
-                value = line.substring(oi + ol, ci);
-
-        return new String[] { code, value };
-    }
-
-    public static String encloseSetting(final String code, final String value) {
-        final String sep = Constants.SETTING_SEPARATOR,
-                o = Constants.OPEN_SETTING_VAL,
-                c = Constants.CLOSE_SETTING_VAL;
-
-        return code + sep + o + value + c + "\n";
     }
 }

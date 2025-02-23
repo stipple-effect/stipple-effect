@@ -8,6 +8,7 @@ Added:
 
 Changed:
 > Clicking is more responsive; most menu elements now listen for a mouse down instead of click event
+> Updated settings file syntax
 
 {1.2.3} - 2025-01-30
 
