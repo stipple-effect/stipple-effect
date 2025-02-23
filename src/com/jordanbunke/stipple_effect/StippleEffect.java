@@ -873,7 +873,7 @@ public class StippleEffect implements ProgramContext {
 
     public void openNativeProject(final String contents, final Path filepath) {
         if (contents != null) {
-            final IRState rep = ParserSerializer.load(contents, filepath);
+            final IRState rep = ParserSerializer.load(contents);
             final int w = rep.width(), h = rep.height();
             final SEContext project =
                     new SEContext(filepath, ProjectState.realize(rep), w, h);
