@@ -177,10 +177,12 @@ public class StippleEffect implements ProgramContext {
             }
         }
 
+        final Path RES_ROOT = Path.of("res");
+
         if (IS_DEVBUILD) {
             VERSION.incrementBuild();
 
-            final Path toSave = Path.of("res").resolve(Constants.PROGRAM_FILE);
+            final Path toSave = RES_ROOT.resolve(Constants.PROGRAM_FILE);
 
             final StringBuilder updated = new StringBuilder();
 
@@ -192,6 +194,9 @@ public class StippleEffect implements ProgramContext {
 
             FileIO.writeFile(toSave, updated.toString());
         }
+
+        final Path versionFile = RES_ROOT.resolve(Constants.VERSION_FILE);
+        FileIO.writeFile(versionFile, VERSION.toString());
     }
 
     public static String getVersion() {
@@ -260,7 +265,7 @@ public class StippleEffect implements ProgramContext {
     public static void main(final String[] args) {
         if (args.length > 0)
             get().launchWithFile(Path.of(Arrays.stream(args).reduce("",
-                    (a, b) -> a.length() == 0 ? b : a + " " + b).trim()));
+                    (a, b) -> a.isEmpty() ? b : a + " " + b).trim()));
     }
 
     private void launchWithFile(final Path filepath) {
@@ -839,10 +844,8 @@ public class StippleEffect implements ProgramContext {
                 });
         window.getEventLogger().unpressAllKeys();
 
-        if (opened.isEmpty())
-            return null;
+        return opened.map(File::toPath).orElse(null);
 
-        return opened.get().toPath();
     }
 
     private void verifyFilepath(final Path filepath) {
@@ -987,7 +990,7 @@ public class StippleEffect implements ProgramContext {
                 rebuildAllMenus();
             }
 
-            if (contexts.size() == 0)
+            if (contexts.isEmpty())
                 exitProgram();
         }
     }

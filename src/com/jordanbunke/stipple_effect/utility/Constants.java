@@ -12,6 +12,7 @@ public class Constants {
             IS_DEVBUILD_CODE = "devbuild";
 
     public static final Path PROGRAM_FILE = Path.of("program"),
+            VERSION_FILE = Path.of("version"),
             ICON_FOLDER = Path.of("icons"),
             PALETTE_FOLDER = Path.of("palettes"),
             CURSOR_FOLDER = Path.of("cursors"),
